@@ -27,7 +27,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
-    implementation('io.github.sogis:oereb-cts:0.0.15') { // Use 0.0.16+ b/c of identifier
+    implementation('io.github.sogis:oereb-cts:0.0.16+') { // latest whatever when using local maven?
         exclude group: 'org.slf4j', module: 'slf4j-simple' 
     }
 }
