@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import ch.so.agi.oereb.cts.service.OerebValidatorService;
+
 @EnableScheduling
 @SpringBootApplication
 public class OerebCtsWebserviceApplication {
@@ -17,7 +19,7 @@ public class OerebCtsWebserviceApplication {
     // CommandLineRunner: Anwendung ist fertig gestartet. 
     // Kubernetes: Live aber nicht ready.
     @Bean
-    CommandLineRunner init(OerebValidator validator) {
+    CommandLineRunner init(OerebValidatorService validator) {
         return args -> {
             validator.validate();
         };

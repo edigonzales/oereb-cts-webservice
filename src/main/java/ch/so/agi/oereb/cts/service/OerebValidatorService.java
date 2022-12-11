@@ -1,7 +1,11 @@
-package ch.so.agi.oereb.cts;
+package ch.so.agi.oereb.cts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ch.so.agi.oereb.cts.EndpointProperties;
+import ch.so.agi.oereb.cts.GetEGRIDWrapper;
+import ch.so.agi.oereb.cts.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class OerebValidator {
+public class OerebValidatorService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
