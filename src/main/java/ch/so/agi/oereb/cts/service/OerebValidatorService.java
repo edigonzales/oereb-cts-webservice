@@ -3,9 +3,10 @@ package ch.so.agi.oereb.cts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.so.agi.oereb.cts.EndpointProperties;
+import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.GetEGRIDWrapper;
 import ch.so.agi.oereb.cts.Result;
+import ch.so.agi.oereb.cts.repository.ResultRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,28 +22,31 @@ public class OerebValidatorService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    EndpointProperties endpointProperties;
+    ServiceProperties serviceProperties;
 
+    @Autowired
+    ResultRepository resultRepository;
+    
     //private HashMap<String,List<Result>> results = new HashMap<String,List<Result>>();
     private List<Result> results = new ArrayList<Result>();
     
     public void validate() {
         
-        for(Map<String,String> endpoint : endpointProperties.getEndpoints()) {            
+        for(Map<String,String> service : serviceProperties.getServices()) {            
             //var results = new ArrayList<Result>();
             
 
             try {
                 {
                     var wrapper = new GetEGRIDWrapper();
-                    var probeResults = wrapper.run(endpoint.get("SERVICE_ENDPOINT"), endpoint);
+                    var probeResults = wrapper.run(service.get("SERVICE_ENDPOINT"), service);
                     results.addAll(probeResults);
                     
                     log.info(probeResults.toString());
                     
-                    // Repository:
-                    // - Schauen, dass erst "kopiert" wird, wenn alle durch sind.
+                    resultRepository.save(probeResults);
                     
+//                    System.out.println(resultRepository.findByIdentifier("so"));
                     
                     
                 }
@@ -50,6 +54,14 @@ public class OerebValidatorService {
                 throw new IllegalArgumentException(e.getMessage());
             }
         }
+        
+        try {
+            System.out.println(resultRepository.findAll());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        
     }
 
     public List<Result> getResults() {

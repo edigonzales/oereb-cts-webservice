@@ -17,6 +17,7 @@ compileJava {
 }
 
 repositories {
+    mavenLocal()    
 	mavenCentral()
 }
 
@@ -27,7 +28,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
-    implementation('io.github.sogis:oereb-cts:0.0.16+') { // latest whatever when using local maven?
+    implementation('io.github.sogis:oereb-cts:0.0.LOCALBUILD') {
         exclude group: 'org.slf4j', module: 'slf4j-simple' 
     }
 }

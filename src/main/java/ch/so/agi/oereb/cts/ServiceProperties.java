@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "oereb")
-public class EndpointProperties {
-    private List<Map<String,String>> endpoints;
+public class ServiceProperties {
+    private List<Map<String,String>> services;
 
-    public List<Map<String, String>> getEndpoints() {
-        return endpoints;
+    public List<Map<String, String>> getServices() {
+        return services;
     }
 
-    public void setEndpoints(List<Map<String, String>> endpoints) {
-        this.endpoints = endpoints;
+    public void setServices(List<Map<String, String>> services) {
+        this.services = services;
     }
 }

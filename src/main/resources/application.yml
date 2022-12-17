@@ -1,8 +1,11 @@
 server:
   forward-headers-strategy: framework
 
+app:
+  repositoryStorage: ${REPOSITORY_STORAGE:#{systemProperties['java.io.tmpdir']}}
+
 oereb: 
-    endpoints:
+    services:
         - identifier: SO
           SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
           EN: 2600595,1215629
