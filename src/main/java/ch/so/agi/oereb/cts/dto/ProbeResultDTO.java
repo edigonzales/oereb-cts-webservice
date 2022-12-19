@@ -1,83 +1,46 @@
-package ch.so.agi.oereb.cts.entity;
+package ch.so.agi.oereb.cts.dto;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "probe_result")
-public class ProbeResult {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ProbeResultDTO {
     private Long id;
     
-    @OneToMany(
-            mappedBy = "probeResult",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-        )
-    private List<CheckResult> checkResults = new ArrayList<>();
+    private List<CheckResultDTO> checkResults;
     
     private String identifier;
     
-    @Column(name = "class_name")
     private String className; 
     
     private String description;
 
-    @Column(name = "service_endpoint")
     private URI serviceEndpoint;
 
     private boolean success;
-    
-    private String message;
-
-    private URI request;
-    
-    @Column(name = "status_code")
-    private Integer statusCode;
-    
-    @Column(name = "start_time")
+            
     private Instant startTime;
 
-    @Column(name = "end_time")
     private Instant endTime;
 
-    @Column(name = "processing_time_secs")
     private double processingTimeSecs;
     
-    @Column(name = "result_file_location")
     private String resultFileLocation;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public List<CheckResult> getCheckResults() {
+    public List<CheckResultDTO> getCheckResults() {
         return checkResults;
     }
 
-    public void setCheckResults(List<CheckResult> checkResults) {
+    public void setCheckResults(List<CheckResultDTO> checkResults) {
         this.checkResults = checkResults;
-    }
-    
-    public void addCheckResult(CheckResult checkResult) {
-        checkResults.add(checkResult);
-        checkResult.setProbeResult(this);
     }
 
     public String getIdentifier() {
@@ -118,30 +81,6 @@ public class ProbeResult {
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public URI getRequest() {
-        return request;
-    }
-
-    public void setRequest(URI request) {
-        this.request = request;
-    }
-
-    public Integer getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
     }
 
     public Instant getStartTime() {

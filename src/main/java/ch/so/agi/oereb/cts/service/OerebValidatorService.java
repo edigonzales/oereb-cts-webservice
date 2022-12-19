@@ -7,6 +7,7 @@ import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.entity.CheckResult;
 import ch.so.agi.oereb.cts.entity.ProbeResult;
 import ch.so.agi.oereb.cts.GetEGRIDWrapper;
+import ch.so.agi.oereb.cts.GetExtractByIdWrapper;
 import ch.so.agi.oereb.cts.Result;
 import ch.so.agi.oereb.cts.repository.CheckResultRepository;
 import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
@@ -49,29 +50,41 @@ public class OerebValidatorService {
         });
         */
 
-        for(Map<String,String> service : serviceProperties.getServices()) {            
-            try {
-                {
-                    var wrapper = new GetEGRIDWrapper();
-                    var results = wrapper.run(service.get("SERVICE_ENDPOINT"), service);
+        for(Map<String,String> service : serviceProperties.getServices()) {
+            String identifier = service.get("identifier");
+            String serviceEndpoint = service.get("SERVICE_ENDPOINT");
+            
+            probeResultRepository.deleteByIdentifier(identifier);
+
+            {
+                var wrapper = new GetEGRIDWrapper();
+                var results = wrapper.run(serviceEndpoint, service);
+                                
+                for (Result pResult : results) {
+                    ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
                     
-                    String identifier = service.get("identifier");
-                    probeResultRepository.deleteByIdentifier(identifier);
-                    log.info("identifier: " + identifier);
-                    
-                    for (Result pResult : results) {
-                        ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
-                        
-                        for (Result cResult : pResult.getResults()) {
-                            CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
-                            probeResult.addCheckResult(checkResult);
-                        }
-                        
-                        probeResultRepository.save(probeResult);
+                    for (Result cResult : pResult.getResults()) {
+                        CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                        probeResult.addCheckResult(checkResult);
                     }
+                    
+                    probeResultRepository.save(probeResult);
                 }
-            } catch (IOException e) {
-                throw new IllegalArgumentException(e.getMessage());
+            }
+            {
+                var wrapper = new GetExtractByIdWrapper();
+                var results = wrapper.run(serviceEndpoint, service);
+
+                for (Result pResult : results) {
+                    ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                    
+                    for (Result cResult : pResult.getResults()) {
+                        CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                        probeResult.addCheckResult(checkResult);
+                    }
+                    
+                    probeResultRepository.save(probeResult);
+                }
             }
         }
     }

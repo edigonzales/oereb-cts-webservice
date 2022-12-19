@@ -39,6 +39,7 @@ public class CheckResult {
 
     private boolean success;
     
+    @Column(length = 20000)
     private String message;
     
     @Column(name = "status_code")

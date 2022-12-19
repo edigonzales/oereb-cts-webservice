@@ -38,3 +38,9 @@ oereb:
           IDENTDN: UR0200001216
           NUMBER: 112
           EGRID: CH727993074655
+#        - identifier: SG
+#          SERVICE_ENDPOINT: https://oereb.geo.sg.ch/ktsg/wsgi/oereb/
+#          EN: 2746774,1255302
+#          IDENTDN: OW0200001406
+#          NUMBER: C1556
+#          EGRID: CH427712875908
