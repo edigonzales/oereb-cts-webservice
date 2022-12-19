@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.so.agi.oereb.cts.ServiceProperties;
+import ch.so.agi.oereb.cts.entity.CheckResult;
+import ch.so.agi.oereb.cts.entity.ProbeResult;
 import ch.so.agi.oereb.cts.GetEGRIDWrapper;
 import ch.so.agi.oereb.cts.Result;
+import ch.so.agi.oereb.cts.repository.CheckResultRepository;
+import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
 import ch.so.agi.oereb.cts.repository.ResultRepository;
+import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,43 +31,49 @@ public class OerebValidatorService {
     ServiceProperties serviceProperties;
 
     @Autowired
-    ResultRepository resultRepository;
-    
-    //private HashMap<String,List<Result>> results = new HashMap<String,List<Result>>();
+    ProbeResultRepository probeResultRepository;
+
+    private ModelMapper modelMapper = new ModelMapper();
+
     private List<Result> results = new ArrayList<Result>();
     
+    @Transactional
     public void validate() {
         
-        for(Map<String,String> service : serviceProperties.getServices()) {            
-            //var results = new ArrayList<Result>();
-            
+        // TODO ggf als Bean?
+        // Es würde auch Result::getResults funktionieren.
+        // Aber automatisch Mappen geht nicht, das sonst der FK fehlt (?)
+        /*
+        modelMapper.typeMap(Result.class, ProbeResult.class).addMappings(mapper -> {
+            mapper.map(src -> src.getResults(), ProbeResult::setCheckResults);
+        });
+        */
 
+        for(Map<String,String> service : serviceProperties.getServices()) {            
             try {
                 {
                     var wrapper = new GetEGRIDWrapper();
-                    var probeResults = wrapper.run(service.get("SERVICE_ENDPOINT"), service);
-                    results.addAll(probeResults);
+                    var results = wrapper.run(service.get("SERVICE_ENDPOINT"), service);
                     
-                    log.info(probeResults.toString());
+                    String identifier = service.get("identifier");
+                    probeResultRepository.deleteByIdentifier(identifier);
+                    log.info("identifier: " + identifier);
                     
-                    resultRepository.save(probeResults);
-                    
-//                    System.out.println(resultRepository.findByIdentifier("so"));
-                    
-                    
+                    for (Result pResult : results) {
+                        ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                        
+                        for (Result cResult : pResult.getResults()) {
+                            CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                            probeResult.addCheckResult(checkResult);
+                        }
+                        
+                        probeResultRepository.save(probeResult);
+                    }
                 }
             } catch (IOException e) {
                 throw new IllegalArgumentException(e.getMessage());
             }
         }
-        
-        try {
-            System.out.println(resultRepository.findAll());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        
     }
 
     public List<Result> getResults() {
