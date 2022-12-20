@@ -50,6 +50,10 @@ public class OerebValidatorService {
         });
         */
 
+        // TODO: 1 XML für einen serviceEndpoint, d.h. beide results zuerst
+        // zusammenfügen, dann XML.
+        
+        
         for(Map<String,String> service : serviceProperties.getServices()) {
             String identifier = service.get("identifier");
             String serviceEndpoint = service.get("SERVICE_ENDPOINT");
@@ -92,8 +96,4 @@ public class OerebValidatorService {
     public List<Result> getResults() {
         return results;
     }
-
-//    public void setResults(HashMap<String, List<Result>> results) {
-//        this.results = results;
-//    }
 }

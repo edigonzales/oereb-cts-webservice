@@ -36,7 +36,7 @@ public class ProbeResult {
     private String description;
 
     @Column(name = "service_endpoint")
-    private URI serviceEndpoint;
+    private String serviceEndpoint;
 
     private boolean success;
     
@@ -104,11 +104,11 @@ public class ProbeResult {
         this.description = description;
     }
 
-    public URI getServiceEndpoint() {
+    public String getServiceEndpoint() {
         return serviceEndpoint;
     }
 
-    public void setServiceEndpoint(URI serviceEndpoint) {
+    public void setServiceEndpoint(String serviceEndpoint) {
         this.serviceEndpoint = serviceEndpoint;
     }
 
