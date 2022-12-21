@@ -40,38 +40,64 @@
                     <th>Last Validation</th>
 		        </tr>
 		    </thead>
-		        <tr th:each="iliRepo: ${repositories}">
+                <tr th:each="probe: ${probesSummary}">
 		            <td>
-	                   <span th:text="${iliRepo.ident}"/>
+                        <span th:text="${probe.identifier}"/>
+                       <!--
 	                   <span>&nbsp;</span>
-	                    <a class="black-link" th:href="${iliRepo.ident}" target="_blank">
+	                    <a class="black-link" th:href="${probe.identifier}" target="_blank">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 							    <rect width="16" height="16" style="fill:white;stroke:none" />
 							    <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
 							    <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
 							</svg>
 	                    </a>
+	                    -->
 		            </td>
 		            
-	                <td th:attr="class=${iliRepo.results['ILISITE_XML'].valid ? 'success-cell' : 'fail-cell'}" > 
-	                    <span th:if="${!iliRepo.results['ILISITE_XML'].valid}">
-	                        <a th:href="${iliRepo.results['ILISITE_XML'].logFile}" class="black-link" target="_blank">Logfile</a>
-	                    </span>
+	                <td>
+                        <span th:text="${probe.serviceEndpoint}"/>
 	                </td>
-	
-	                <td th:attr="class=${iliRepo.results['ILIMODELS_XML'].valid ? 'success-cell' : 'fail-cell'}" > 
-	                    <span th:if="${!iliRepo.results['ILIMODELS_XML'].valid}">
-	                        <a th:href="${iliRepo.results['ILIMODELS_XML'].logFile}" class="black-link" target="_blank">Logfile</a>
-	                    </span>
+
+	                <td> 
+                        <span th:if="${probe.successEgrid}">
+                            <span class="badge-success">Success</span>
+                        </span>
+                        <span th:if="${!probe.successEgrid}">
+                            <span class="badge-fail">Failure</span>
+                        </span>
+                        
+                       <span>&nbsp;</span>
+                        <a class="black-link" th:href="@{/details/getegrid/}+''+${probe.identifier}" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                <rect width="16" height="16" style="fill:white;stroke:none" />
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                        </a>
 	                </td>
 	                
-	                <td th:attr="class=${iliRepo.results['MODELS'].valid ? 'success-cell' : 'fail-cell'}" > 
-	                    <span th:if="${!iliRepo.results['MODELS'].valid}">
-	                        <a th:href="${iliRepo.results['MODELS'].logFile}" class="black-link" target="_blank">Logfile</a>
-	                    </span>
-	                </td>
-	                
-	                <td th:text="${#dates.format(iliRepo.results['ILIMODELS_XML'].lastUpdate, 'yyyy-MM-dd HH:mm:ss')}" />
+                    <td> 
+                        <span th:if="${probe.successExtract}">
+                            <span class="badge-success">Success</span>
+                        </span>
+                        <span th:if="${!probe.successExtract}">
+                            <span class="badge-fail">Failure</span>
+                        </span>
+                        
+                       <span>&nbsp;</span>
+                        <a class="black-link" th:href="@{/details/extract/}+''+${probe.identifier}" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                <rect width="16" height="16" style="fill:white;stroke:none" />
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <span th:text="${#dates.format(probe.endTime, 'yyyy-MM-dd HH:mm:ss')}"/>
+                    </td>
 		        </tr>
 		    </tbody>
 		</table>

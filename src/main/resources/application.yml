@@ -4,7 +4,8 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:oerebctsdb
+    #url: jdbc:h2:mem:oerebctsdb
+    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb
     driverClassName: org.h2.Driver
     username: sa
     password:
@@ -13,8 +14,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
+    #hibernate:
+      #ddl-auto: create
   h2:
     console:
       enabled: true
@@ -26,21 +27,21 @@ app:
 
 oereb: 
     services:
-        #- identifier: SO
-        #  SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
-        #  EN: 2600595,1215629
-        #  IDENTDN: SO0200002457
-        #  NUMBER: 168
-        #  EGRID: CH807306583219
+        - identifier: SO
+          SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
+          EN: 2600595,1215629
+          IDENTDN: SO0200002457
+          NUMBER: 168
+          EGRID: CH807306583219
         - identifier: UR
           SERVICE_ENDPOINT: https://prozessor-oereb.ur.ch/oereb/
           EN: 2694124,1180546
           IDENTDN: UR0200001216
           NUMBER: 112
           EGRID: CH727993074655
-#        - identifier: SG
-#          SERVICE_ENDPOINT: https://oereb.geo.sg.ch/ktsg/wsgi/oereb/
-#          EN: 2746774,1255302
-#          IDENTDN: OW0200001406
-#          NUMBER: C1556
-#          EGRID: CH427712875908
+        - identifier: SG
+          SERVICE_ENDPOINT: https://oereb.geo.sg.ch/ktsg/wsgi/oereb/
+          EN: 2746774,1255302
+          IDENTDN: OW0200001406
+          NUMBER: C1556
+          EGRID: CH427712875908

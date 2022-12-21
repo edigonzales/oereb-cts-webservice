@@ -63,6 +63,43 @@ body, div {
     background-color: #92C5DE;
 }
 
+.badge-fail {
+    background-color: #FAA582;
+    color: #333333;
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    width: 80px;
+}
+
+.badge-success {
+    background-color: #92C5DE;
+    color: #333333;
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    width: 80px;
+}
+
+.summary-fail {
+    background-color: #FAA582; 
+    border: 1px solid white;
+}
+
+.summary-success {
+    background-color: #92C5DE; 
+    border: 1px solid white;
+}
+
+.line {
+    width:100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid Gainsboro;
+}
+
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
 }

@@ -2,7 +2,9 @@ package ch.so.agi.oereb.cts.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.so.agi.oereb.cts.dto.ProbeResultDTO;
@@ -33,7 +35,7 @@ public class MainController {
     private ModelMapper modelMapper = new ModelMapper();
 
     @GetMapping("/")
-    public String show(/*Model model*/) {        
+    public String show(Model model) {        
 //        List<ProbeResult> probeResults = probeResultRepository.findAll();
 
         // Weil LAZY werden mit findAll zuerst nur die ProbeResults requestet.
@@ -50,9 +52,9 @@ public class MainController {
 //                .collect(Collectors.toList());
 
         
-        List<Tuple> summaryList = probeResultRepository.getResultSummary();
+        List<Tuple> probeSummaryList = probeResultRepository.getResultSummary();
         
-        List<ProbeSummaryDTO> summaryDTOList = summaryList.stream()
+        List<ProbeSummaryDTO> probeSummaryDTOList = probeSummaryList.stream()
             .map(t -> new ProbeSummaryDTO(
                     t.get(0, String.class),
                     t.get(1, String.class),
@@ -62,16 +64,32 @@ public class MainController {
                     ))
             .collect(Collectors.toList());
         
-        System.out.println(summaryDTOList);
-        
-        
-        // Eventuell doch Repository:
-        // - Übersicht für Titelseite
-        // - Detail pro Requestgruppe
-        
-        //model.addAttribute("repositories", iliRepoList);
+        System.out.println(probeSummaryDTOList);
+
+        model.addAttribute("probesSummary", probeSummaryDTOList);
         return "gui";
-//        return summaryDTOList;
     } 
+    
+    @GetMapping("/details/{probe}/{identifier}")
+    public String showDetails(@PathVariable String probe, @PathVariable String identifier, Model model) {
+        if (!probe.equalsIgnoreCase("getegrid") && !probe.equalsIgnoreCase("extract")) {
+            return null; // TODO
+        }
+        
+        String className = "ch.so.agi.oereb.cts.GetEGRIDProbe";
+        if (probe.equalsIgnoreCase("extract")) {
+            className = "ch.so.agi.oereb.cts.GetExtractByIdProbe";
+        }
+        
+        List<ProbeResult> probeResultList = probeResultRepository.findByIdentifierAndClassName(identifier, className);
+        List<ProbeResultDTO> probeResultDTOList = probeResultList.stream()
+                .map(probeResult -> modelMapper.map(probeResult, ProbeResultDTO.class)).collect(Collectors.toList());
+        
+        System.out.println(probeResultDTOList.get(0).getCheckResults().size());
+        
+        model.addAttribute("probesResults", probeResultDTOList);
+        return "details";
+    }
+
 
 }

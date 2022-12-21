@@ -14,6 +14,9 @@ public interface ProbeResultRepository extends JpaRepository<ProbeResult, Long> 
     void deleteByIdentifier(String identifier);
     
     @Transactional(readOnly = true)
+    List<ProbeResult> findByIdentifierAndClassName(String identifier, String className);
+    
+    @Transactional(readOnly = true)
     @Query(value="SELECT extract.identifier, extract.service_endpoint, egrid.success AS success_egrid, extract.success AS success_extract, extract.end_time\n"
             + "FROM \n"
             + "(\n"

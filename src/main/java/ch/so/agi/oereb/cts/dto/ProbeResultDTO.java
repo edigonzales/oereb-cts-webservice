@@ -19,6 +19,8 @@ public class ProbeResultDTO {
 
     private boolean success;
             
+    private URI request;
+
     private Instant startTime;
 
     private Instant endTime;
@@ -81,6 +83,14 @@ public class ProbeResultDTO {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public URI getRequest() {
+        return request;
+    }
+
+    public void setRequest(URI request) {
+        this.request = request;
     }
 
     public Instant getStartTime() {

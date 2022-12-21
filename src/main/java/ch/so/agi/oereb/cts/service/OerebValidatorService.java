@@ -38,7 +38,6 @@ public class OerebValidatorService {
 
     private List<Result> results = new ArrayList<Result>();
     
-    @Transactional
     public void validate() {
         
         // TODO ggf als Bean?
@@ -53,42 +52,45 @@ public class OerebValidatorService {
         // TODO: 1 XML für einen serviceEndpoint, d.h. beide results zuerst
         // zusammenfügen, dann XML.
         
-        
         for(Map<String,String> service : serviceProperties.getServices()) {
             String identifier = service.get("identifier");
             String serviceEndpoint = service.get("SERVICE_ENDPOINT");
-            
-            probeResultRepository.deleteByIdentifier(identifier);
+            this.validateService(identifier, serviceEndpoint, service);
+        }
+    }
+    
+    @Transactional
+    private void validateService(String identifier, String serviceEndpoint, Map<String,String> service) {
+        probeResultRepository.deleteByIdentifier(identifier);
 
-            {
-                var wrapper = new GetEGRIDWrapper();
-                var results = wrapper.run(serviceEndpoint, service);
-                                
-                for (Result pResult : results) {
-                    ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
-                    
-                    for (Result cResult : pResult.getResults()) {
-                        CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
-                        probeResult.addCheckResult(checkResult);
-                    }
-                    
-                    probeResultRepository.save(probeResult);
+        {
+            var wrapper = new GetEGRIDWrapper();
+            var results = wrapper.run(serviceEndpoint, service);
+                            
+            for (Result pResult : results) {
+                ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                
+                for (Result cResult : pResult.getResults()) {
+                    CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                    probeResult.addCheckResult(checkResult);
                 }
+                
+                probeResultRepository.save(probeResult);
             }
-            {
-                var wrapper = new GetExtractByIdWrapper();
-                var results = wrapper.run(serviceEndpoint, service);
+        }
+        {
+            var wrapper = new GetExtractByIdWrapper();
+            var results = wrapper.run(serviceEndpoint, service);
 
-                for (Result pResult : results) {
-                    ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
-                    
-                    for (Result cResult : pResult.getResults()) {
-                        CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
-                        probeResult.addCheckResult(checkResult);
-                    }
-                    
-                    probeResultRepository.save(probeResult);
+            for (Result pResult : results) {
+                ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                
+                for (Result cResult : pResult.getResults()) {
+                    CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                    probeResult.addCheckResult(checkResult);
                 }
+                
+                probeResultRepository.save(probeResult);
             }
         }
     }
