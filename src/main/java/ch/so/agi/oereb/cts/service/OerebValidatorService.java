@@ -11,7 +11,6 @@ import ch.so.agi.oereb.cts.GetExtractByIdWrapper;
 import ch.so.agi.oereb.cts.Result;
 import ch.so.agi.oereb.cts.repository.CheckResultRepository;
 import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
-import ch.so.agi.oereb.cts.repository.ResultRepository;
 import jakarta.transaction.Transactional;
 
 import java.io.IOException;

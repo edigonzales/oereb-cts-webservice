@@ -66,6 +66,13 @@
                             </td>
                             <td th:text="${checkResult.success}"></td>
                         </tr>
+                        <tr th:if="${checkResult.className == 'ch.so.agi.oereb.cts.StatusCodeCheck'}">
+                            <td>
+                                Status code:
+                            </td>
+                            <td th:text="${checkResult.statusCode}"></td>
+                        </tr>
+
                         <tr th:if="${!checkResult.success}">
                             <td>
                                 Message:

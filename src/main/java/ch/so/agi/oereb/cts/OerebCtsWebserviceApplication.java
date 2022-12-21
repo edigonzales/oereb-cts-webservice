@@ -21,7 +21,7 @@ public class OerebCtsWebserviceApplication {
     @Bean
     CommandLineRunner init(OerebValidatorService validator) {
         return args -> {
-            //validator.validate();
+            validator.validate();
         };
     }
 }

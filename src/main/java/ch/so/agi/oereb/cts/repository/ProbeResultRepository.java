@@ -17,43 +17,164 @@ public interface ProbeResultRepository extends JpaRepository<ProbeResult, Long> 
     List<ProbeResult> findByIdentifierAndClassName(String identifier, String className);
     
     @Transactional(readOnly = true)
-    @Query(value="SELECT extract.identifier, extract.service_endpoint, egrid.success AS success_egrid, extract.success AS success_extract, extract.end_time\n"
+    @Query(value="SELECT \n"
+            + "    extract.identifier, extract.service_endpoint, egrid.success AS success_egrid, extract.success AS success_extract, extract.end_time\n"
             + "FROM \n"
             + "(\n"
-            + "SELECT DISTINCT ON (foo.identifier, foo.class_name) foo.identifier, foo.service_endpoint, foo.success, foo.class_name, foo.end_time FROM PROBE_RESULT AS foo\n"
-            + "LEFT JOIN (SELECT identifier, class_name, success FROM PROBE_RESULT GROUP BY identifier, class_name, success HAVING success IS FALSE) AS bar\n"
-            + "ON bar.identifier = foo.identifier\n"
-            + "WHERE foo.class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'\n"
+            + "    SELECT \n"
+            + "        foo.identifier, \n"
+            + "        foo.service_endpoint, \n"
+            + "        CASE \n"
+            + "            WHEN bar.success IS NULL THEN TRUE\n"
+            + "            ELSE FALSE \n"
+            + "        END AS success,\n"
+            + "        foo.class_name, \n"
+            + "        foo.end_time\n"
+            + "    FROM \n"
+            + "    (\n"
+            + "        SELECT \n"
+            + "            identifier, class_name, success \n"
+            + "        FROM \n"
+            + "            PROBE_RESULT\n"
+            + "        WHERE \n"
+            + "            class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'\n"
+            + "        GROUP BY \n"
+            + "            identifier, class_name, success \n"
+            + "        HAVING \n"
+            + "            success IS FALSE    \n"
+            + "    ) AS bar \n"
+            + "    RIGHT JOIN \n"
+            + "    (\n"
+            + "        SELECT DISTINCT ON (identifier) \n"
+            + "            identifier, service_endpoint, success, class_name, end_time \n"
+            + "        FROM \n"
+            + "            PROBE_RESULT\n"
+            + "        WHERE \n"
+            + "            class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'\n"
+            + "    ) AS foo\n"
+            + "    ON foo.identifier = bar.identifier\n"
             + ") AS egrid\n"
             + "LEFT JOIN \n"
             + "(\n"
-            + "SELECT DISTINCT ON (foo.identifier, foo.class_name) foo.identifier, foo.service_endpoint, foo.success, foo.class_name, foo.end_time FROM PROBE_RESULT AS foo\n"
-            + "LEFT JOIN (SELECT identifier, class_name, success FROM PROBE_RESULT GROUP BY identifier, class_name, success HAVING success IS FALSE) AS bar\n"
-            + "ON bar.identifier = foo.identifier\n"
-            + "WHERE foo.class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'\n"
+            + "    SELECT \n"
+            + "        foo.identifier, \n"
+            + "        foo.service_endpoint, \n"
+            + "        CASE \n"
+            + "            WHEN bar.success IS NULL THEN TRUE\n"
+            + "            ELSE FALSE \n"
+            + "        END AS success,\n"
+            + "        foo.class_name, \n"
+            + "        foo.end_time\n"
+            + "    FROM \n"
+            + "    (\n"
+            + "        SELECT \n"
+            + "            identifier, class_name, success \n"
+            + "        FROM \n"
+            + "            PROBE_RESULT\n"
+            + "        WHERE \n"
+            + "            class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'\n"
+            + "        GROUP BY \n"
+            + "            identifier, class_name, success \n"
+            + "        HAVING \n"
+            + "            success IS FALSE    \n"
+            + "    ) AS bar \n"
+            + "    RIGHT JOIN \n"
+            + "    (\n"
+            + "        SELECT DISTINCT ON (identifier) \n"
+            + "            identifier, service_endpoint, success, class_name, end_time \n"
+            + "        FROM \n"
+            + "            PROBE_RESULT\n"
+            + "        WHERE \n"
+            + "            class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'\n"
+            + "    ) AS foo\n"
+            + "    ON foo.identifier = bar.identifier\n"
             + ") AS extract\n"
             + "ON egrid.identifier = extract.identifier\n"
-            + "ORDER BY extract.identifier", nativeQuery=true)
+            + "WHERE \n"
+            + "    extract.identifier IS NOT NULL\n"
+            + "ORDER BY \n"
+            + "    extract.identifier\n"
+            + "", nativeQuery=true)
     List<Tuple> getResultSummary();
 }
 
 
 /*
-SELECT extract.identifier, extract.service_endpoint, egrid.success AS success_egrid, extract.success AS success_extract, extract.end_time
+SELECT 
+    extract.identifier, extract.service_endpoint, egrid.success AS success_egrid, extract.success AS success_extract, extract.end_time
 FROM 
 (
-SELECT DISTINCT ON (foo.identifier, foo.class_name) foo.identifier, foo.service_endpoint, foo.success, foo.class_name, foo.end_time FROM PROBE_RESULT AS foo
-LEFT JOIN (SELECT identifier, class_name, success FROM PROBE_RESULT GROUP BY identifier, class_name, success HAVING success IS FALSE) AS bar
-ON bar.identifier = foo.identifier
-WHERE foo.class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'
+    SELECT 
+        foo.identifier, 
+        foo.service_endpoint, 
+        CASE 
+            WHEN bar.success IS NULL THEN TRUE
+            ELSE FALSE 
+        END AS success,
+        foo.class_name, 
+        foo.end_time
+    FROM 
+    (
+        SELECT 
+            identifier, class_name, success 
+        FROM 
+            PROBE_RESULT
+        WHERE 
+            class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'
+        GROUP BY 
+            identifier, class_name, success 
+        HAVING 
+            success IS FALSE    
+    ) AS bar 
+    RIGHT JOIN 
+    (
+        SELECT DISTINCT ON (identifier) 
+            identifier, service_endpoint, success, class_name, end_time 
+        FROM 
+            PROBE_RESULT
+        WHERE 
+            class_name = 'ch.so.agi.oereb.cts.GetEGRIDProbe'
+    ) AS foo
+    ON foo.identifier = bar.identifier
 ) AS egrid
 LEFT JOIN 
 (
-SELECT DISTINCT ON (foo.identifier, foo.class_name) foo.identifier, foo.service_endpoint, foo.success, foo.class_name, foo.end_time FROM PROBE_RESULT AS foo
-LEFT JOIN (SELECT identifier, class_name, success FROM PROBE_RESULT GROUP BY identifier, class_name, success HAVING success IS FALSE) AS bar
-ON bar.identifier = foo.identifier
-WHERE foo.class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
+    SELECT 
+        foo.identifier, 
+        foo.service_endpoint, 
+        CASE 
+            WHEN bar.success IS NULL THEN TRUE
+            ELSE FALSE 
+        END AS success,
+        foo.class_name, 
+        foo.end_time
+    FROM 
+    (
+        SELECT 
+            identifier, class_name, success 
+        FROM 
+            PROBE_RESULT
+        WHERE 
+            class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
+        GROUP BY 
+            identifier, class_name, success 
+        HAVING 
+            success IS FALSE    
+    ) AS bar 
+    RIGHT JOIN 
+    (
+        SELECT DISTINCT ON (identifier) 
+            identifier, service_endpoint, success, class_name, end_time 
+        FROM 
+            PROBE_RESULT
+        WHERE 
+            class_name = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
+    ) AS foo
+    ON foo.identifier = bar.identifier
 ) AS extract
 ON egrid.identifier = extract.identifier
-ORDER BY extract.identifier
+WHERE 
+    extract.identifier IS NOT NULL
+ORDER BY 
+    extract.identifier
 */

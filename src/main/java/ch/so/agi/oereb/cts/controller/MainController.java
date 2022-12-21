@@ -1,8 +1,10 @@
 package ch.so.agi.oereb.cts.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +19,12 @@ import jakarta.persistence.Tuple;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.time.Instant;
 
 import org.modelmapper.ModelMapper;
@@ -32,6 +39,9 @@ public class MainController {
     @Autowired
     ProbeResultRepository probeResultRepository;
 
+    @Autowired
+    OerebValidatorService validator;
+    
     private ModelMapper modelMapper = new ModelMapper();
 
     @GetMapping("/")
@@ -53,7 +63,7 @@ public class MainController {
 
         
         List<Tuple> probeSummaryList = probeResultRepository.getResultSummary();
-        
+
         List<ProbeSummaryDTO> probeSummaryDTOList = probeSummaryList.stream()
             .map(t -> new ProbeSummaryDTO(
                     t.get(0, String.class),
@@ -63,8 +73,6 @@ public class MainController {
                     t.get(4, java.time.OffsetDateTime.class).toInstant()
                     ))
             .collect(Collectors.toList());
-        
-        System.out.println(probeSummaryDTOList);
 
         model.addAttribute("probesSummary", probeSummaryDTOList);
         return "gui";
@@ -84,12 +92,42 @@ public class MainController {
         List<ProbeResult> probeResultList = probeResultRepository.findByIdentifierAndClassName(identifier, className);
         List<ProbeResultDTO> probeResultDTOList = probeResultList.stream()
                 .map(probeResult -> modelMapper.map(probeResult, ProbeResultDTO.class)).collect(Collectors.toList());
-        
-        System.out.println(probeResultDTOList.get(0).getCheckResults().size());
-        
+                
         model.addAttribute("probesResults", probeResultDTOList);
         return "details";
     }
 
-
+    @Scheduled(cron="${app.checkCronExpression}")
+    //@Scheduled(cron="0 */4 * * * *")
+    private void checkRepos() {
+        log.info("Validating...");
+        validator.validate();
+    }
+    
+    @Scheduled(cron="0 0/6 * * * *")
+    private void cleanUp() {    
+        log.debug("Deleting old files...");
+        var workDirectory = Paths.get(System.getProperty("java.io.tmpdir")).toFile();        
+        var workDirectoryPrefix = "oerebcts";
+        
+        File[] tmpDirs = workDirectory.listFiles();
+        if(tmpDirs!=null) {
+            for (java.io.File tmpDir : tmpDirs) {
+                if (tmpDir.getName().startsWith(workDirectoryPrefix)) {
+                    try {
+                        FileTime creationTime = (FileTime) Files.getAttribute(Paths.get(tmpDir.getAbsolutePath()), "creationTime");                    
+                        Instant now = Instant.now();
+                        
+                        long fileAge = now.getEpochSecond() - creationTime.toInstant().getEpochSecond();
+                        if (fileAge > 60*60*4) {
+                            log.info("deleting {}", tmpDir.getAbsolutePath());
+                            FileSystemUtils.deleteRecursively(tmpDir);
+                        }
+                    } catch (IOException e) {
+                        throw new IllegalStateException(e);
+                    }
+                }
+            }
+        }
+    }
 }
