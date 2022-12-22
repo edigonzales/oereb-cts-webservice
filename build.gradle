@@ -53,8 +53,6 @@ graalvmNative {
             debug = false 
             verbose = true 
             fallback = false 
-            //configurationFileDirectories.from(file('src/main/resources/META-INF/native-image/')) 
-            //configurationFileDirectories.from(file("conf-dir/")) 
             buildArgs.add('--enable-url-protocols=http,https') 
             buildArgs.add("--libc=musl")
             buildArgs.add("--static")   
