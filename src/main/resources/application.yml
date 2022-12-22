@@ -1,16 +1,17 @@
 server:
   forward-headers-strategy: framework
+  port: 8080
 
 
 spring:
   datasource:
     #url: jdbc:h2:mem:oerebctsdb
-    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb
+    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb_2
     driverClassName: org.h2.Driver
     username: sa
     password:
   jpa:
-    show-sql: true
+    show-sql: ${SHOW_SQL:false}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
@@ -18,9 +19,16 @@ spring:
       ddl-auto: create
   h2:
     console:
-      enabled: true
+      enabled: ${ENABLE_DB_CONSOLE:false}
       #path: /h2-ui
 
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    ch.so.agi: ${LOG_LEVEL_APP:INFO} 
+    org.springframework.orm.jpa: ${LOG_LEVEL_DB:INFO} 
+    org.springframework.transaction: ${LOG_LEVEL_DB:INFO}  
+    org.hibernate.engine.transaction.internal.TransactionImpl: ${LOG_LEVEL_DB:INFO} 
 
 app:
   #repositoryStorage: ${REPOSITORY_STORAGE:#{systemProperties['java.io.tmpdir']}}

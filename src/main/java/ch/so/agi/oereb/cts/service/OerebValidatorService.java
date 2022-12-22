@@ -2,6 +2,7 @@ package ch.so.agi.oereb.cts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.entity.CheckResult;
@@ -9,14 +10,8 @@ import ch.so.agi.oereb.cts.entity.ProbeResult;
 import ch.so.agi.oereb.cts.GetEGRIDWrapper;
 import ch.so.agi.oereb.cts.GetExtractByIdWrapper;
 import ch.so.agi.oereb.cts.Result;
-import ch.so.agi.oereb.cts.repository.CheckResultRepository;
 import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
-import jakarta.transaction.Transactional;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -34,34 +29,25 @@ public class OerebValidatorService {
     ProbeResultRepository probeResultRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
-
-    private List<Result> results = new ArrayList<Result>();
     
-    public void validate() {
-        
-        // TODO ggf als Bean?
-        // Es würde auch Result::getResults funktionieren.
-        // Aber automatisch Mappen geht nicht, das sonst der FK fehlt (?)
-        /*
-        modelMapper.typeMap(Result.class, ProbeResult.class).addMappings(mapper -> {
-            mapper.map(src -> src.getResults(), ProbeResult::setCheckResults);
-        });
-        */
-
-        // TODO: 1 XML für einen serviceEndpoint, d.h. beide results zuerst
-        // zusammenfügen, dann XML.
-        
-        for(Map<String,String> service : serviceProperties.getServices()) {
-            String identifier = service.get("identifier");
-            String serviceEndpoint = service.get("SERVICE_ENDPOINT");
-            this.validateService(identifier, serviceEndpoint, service);
-        }
-    }
+    /* Etwas über Spring Transaction Management gelernt...
+     * Funktioniert nur bei public-Methoden (wegen Proxies)
+     * und via external calls.
+     * Andere Lösungen: https://medium.com/javarevisited/spring-transactional-mistakes-everyone-did-31418e5a6d6b
+     */
     
+    /*
+    modelMapper.typeMap(Result.class, ProbeResult.class).addMappings(mapper -> {
+        mapper.map(src -> src.getResults(), ProbeResult::setCheckResults);
+    });
+    */
+
+    // xquery db Idee: 1 XML für einen serviceEndpoint, d.h. beide results zuerst
+    // zusammenfügen, dann XML.
+            
     @Transactional
-    private void validateService(String identifier, String serviceEndpoint, Map<String,String> service) {
+    public void validate(String identifier, String serviceEndpoint, Map<String,String> service) {
         probeResultRepository.deleteByIdentifier(identifier);
-
         {
             var wrapper = new GetEGRIDWrapper();
             var results = wrapper.run(serviceEndpoint, service);
@@ -92,9 +78,5 @@ public class OerebValidatorService {
                 probeResultRepository.save(probeResult);
             }
         }
-    }
-
-    public List<Result> getResults() {
-        return results;
     }
 }

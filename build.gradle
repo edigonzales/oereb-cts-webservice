@@ -42,3 +42,29 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+   archiveName = baseName + "-" + version + "-exec.jar"
+}
+
+graalvmNative {
+    binaries {
+        main {
+            debug = false 
+            verbose = true 
+            fallback = false 
+            //configurationFileDirectories.from(file('src/main/resources/META-INF/native-image/')) 
+            //configurationFileDirectories.from(file("conf-dir/")) 
+            buildArgs.add('--enable-url-protocols=http,https') 
+            buildArgs.add("--libc=musl")
+            buildArgs.add("--static")   
+        }
+        /*
+        test {
+            verbose = true
+            fallback = false 
+            buildArgs.add('--enable-url-protocols=http,https') 
+        }
+        */
+    }
+}

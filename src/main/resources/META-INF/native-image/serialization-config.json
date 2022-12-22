@@ -1,0 +1,14 @@
+{
+  "types":[
+    {
+      "name":"java.lang.String"
+    },
+    {
+      "name":"java.net.URI"
+    }
+  ],
+  "lambdaCapturingTypes":[
+  ],
+  "proxies":[
+  ]
+}

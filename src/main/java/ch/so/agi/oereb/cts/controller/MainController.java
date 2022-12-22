@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.dto.ProbeResultDTO;
 import ch.so.agi.oereb.cts.dto.ProbeSummaryDTO;
 import ch.so.agi.oereb.cts.entity.ProbeResult;
@@ -18,6 +19,7 @@ import jakarta.persistence.Tuple;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +37,9 @@ import org.slf4j.LoggerFactory;
 @Controller
 public class MainController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    ServiceProperties serviceProperties;
 
     @Autowired
     ProbeResultRepository probeResultRepository;
@@ -101,7 +106,11 @@ public class MainController {
     //@Scheduled(cron="0 */4 * * * *")
     private void checkRepos() {
         log.info("Validating...");
-        validator.validate();
+        for(Map<String,String> service : serviceProperties.getServices()) {
+            String identifier = service.get("identifier");
+            String serviceEndpoint = service.get("SERVICE_ENDPOINT");
+            validator.validate(identifier, serviceEndpoint, service);
+        }
     }
     
     @Scheduled(cron="0 0/6 * * * *")

@@ -5,12 +5,11 @@ import jakarta.persistence.Tuple;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ProbeResultRepository extends JpaRepository<ProbeResult, Long> {    
-    @Transactional
+public interface ProbeResultRepository extends CrudRepository<ProbeResult, Long> {    
     void deleteByIdentifier(String identifier);
     
     @Transactional(readOnly = true)
