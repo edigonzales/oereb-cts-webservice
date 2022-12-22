@@ -9,7 +9,7 @@ WORKDIR $HOME
 RUN chown $UID $HOME \
     && chmod "g+rwX" $HOME \
     && chown $UID:root $HOME
-COPY --chown=$UID:root build/libs/interlis-repo-checker-*-exec.jar $HOME/application.jar
+COPY --chown=$UID:root build/libs/oereb-cts-webservice-*-exec.jar $HOME/application.jar
 
 USER $UID
 EXPOSE 8080
