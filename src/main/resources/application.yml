@@ -15,8 +15,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create
+    #hibernate:
+      #ddl-auto: create
   h2:
     console:
       enabled: ${ENABLE_DB_CONSOLE:false}
@@ -87,7 +87,7 @@ oereb:
         - identifier: JU
           SERVICE_ENDPOINT: https://geo.jura.ch/crdppf_server/
           EN: 2592766,1245889
-          IDENTDN: 6711_1163
+          IDENTDN: "6711_1163" # Anführungszeichen sind notwendig, sonder verschwindet der Underscore.
           NUMBER: 1163
           EGRID: CH110696447807
         - identifier: LU
