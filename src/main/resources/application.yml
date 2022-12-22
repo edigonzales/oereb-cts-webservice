@@ -87,7 +87,7 @@ oereb:
         - identifier: JU
           SERVICE_ENDPOINT: https://geo.jura.ch/crdppf_server/
           EN: 2592766,1245889
-          IDENTDN: "6711_1163" # Anführungszeichen sind notwendig, sonder verschwindet der Underscore.
+          IDENTDN: "6711_1163" # Anführungszeichen sind notwendig, sonst verschwindet der Underscore.
           NUMBER: 1163
           EGRID: CH110696447807
         - identifier: LU
