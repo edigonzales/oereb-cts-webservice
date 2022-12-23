@@ -27,7 +27,7 @@ public class OerebCtsWebserviceApplication {
                 String identifier = service.get("identifier");
                 String serviceEndpoint = service.get("SERVICE_ENDPOINT");
                 
-                //validator.validate(identifier, serviceEndpoint, service);
+                validator.validate(identifier, serviceEndpoint, service);
             }
         };
     }
