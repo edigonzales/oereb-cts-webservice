@@ -25,8 +25,7 @@ public class OerebCtsWebserviceApplication {
         return args -> {
             for(Map<String,String> service : serviceProperties.getServices()) {
                 String identifier = service.get("identifier");
-                String serviceEndpoint = service.get("SERVICE_ENDPOINT");
-                
+                String serviceEndpoint = service.get("SERVICE_ENDPOINT"); 
                 validator.validate(identifier, serviceEndpoint, service);
             }
         };
