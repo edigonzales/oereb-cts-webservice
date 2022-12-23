@@ -44,10 +44,18 @@ body, div {
     /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
 }
 
+.styled-table table {
+    border-collapse: collapse;
+}
+
 .styled-table thead tr {
     background-color: #F7F7F7;
     color: #333333;
     text-align: left;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
 }
 
 .styled-table th,
@@ -55,6 +63,7 @@ body, div {
     padding: 12px 15px;
 }
 
+/*
 .fail-cell {
     background-color: #FAA582;
 }
@@ -62,6 +71,7 @@ body, div {
 .success-cell {
     background-color: #92C5DE;
 }
+*/
 
 .badge-fail {
     background-color: #FAA582;
@@ -100,10 +110,6 @@ body, div {
     border-bottom: 1px solid Gainsboro;
 }
 
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
 .black-link {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -121,6 +127,55 @@ a.black-link:visited {
     text-decoration: underline !important;
 }  
 
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+    
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    tr { border: 1px solid #dddddd; }
+    
+    td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #dddddd; 
+        position: relative;
+        padding-left: 50%; 
+    }
+    
+    td:before { 
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+    }
+
+    /*
+    Label the data
+    */
+    /*
+    td:nth-of-type(1):before { content: "Identifier"; }
+    td:nth-of-type(2):before { content: "Service Endpoint"; }
+    td:nth-of-type(3):before { content: "GetEGRID"; }
+    td:nth-of-type(4):before { content: "Extract"; }
+    td:nth-of-type(5):before { content: "Last Validation"; }
+    */
+}
 
 /*
 .styled-table tbody tr:nth-of-type(even) {

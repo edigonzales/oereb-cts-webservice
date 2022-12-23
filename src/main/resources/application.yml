@@ -150,6 +150,12 @@ oereb:
           #IDENTDN= fehlt in XML
           #NUMBER=6918
           EGRID: CH595290323059
+        - identifier: ZG
+          SERVICE_ENDPOINT: https://oereb.zg.ch/ors/
+          EN: 2681396,1225658
+          IDENTDN: ZG0200001711
+          NUMBER: 289
+          EGRID: CH187006657415
         - identifier: ZH
           SERVICE_ENDPOINT: https://maps.zh.ch/oereb/v2/
           EN: 2683914,1248184
