@@ -71,6 +71,9 @@
       "pattern":"\\Qoereb_v2_0/Extract.xsd\\E"
     }, 
     {
+      "pattern":"\\Qoereb_v2_0/Versioning.xsd\\E"
+    }, 
+    {
       "pattern":"\\Qorg/apache/catalina/core/RestrictedFilters.properties\\E"
     }, 
     {
@@ -123,6 +126,9 @@
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/actuate/autoconfigure/availability/AvailabilityHealthContributorAutoConfiguration.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/actuate/autoconfigure/availability/AvailabilityProbesAutoConfiguration$ProbesCondition.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/actuate/autoconfigure/availability/AvailabilityProbesAutoConfiguration.class\\E"
@@ -1025,9 +1031,6 @@
       "pattern":"\\Qorg/springframework/core/annotation/Order.class\\E"
     }, 
     {
-      "pattern":"\\Qorg/springframework/data/jpa/repository/JpaRepository.class\\E"
-    }, 
-    {
       "pattern":"\\Qorg/springframework/data/jpa/repository/support/JpaRepositoryFactoryBean.class\\E"
     }, 
     {
@@ -1035,9 +1038,6 @@
     }, 
     {
       "pattern":"\\Qorg/springframework/data/repository/CrudRepository.class\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/springframework/data/repository/ListCrudRepository.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/data/web/config/EnableSpringDataWebSupport$QuerydslActivator.class\\E"
@@ -1100,7 +1100,7 @@
       "pattern":"\\Qorg/xmlresolver/catalog.xml\\E"
     }, 
     {
-      "pattern":"\\Qstatic/css/oerebcts.css\\E"
+      "pattern":"\\Qstatic/css/oerebcts-gui.css\\E"
     }, 
     {
       "pattern":"\\Qtemplates/\\E"
