@@ -75,7 +75,9 @@ public class MainController {
                     t.get(1, String.class),
                     t.get(2, Boolean.class),
                     t.get(3, Boolean.class),
-                    t.get(4, java.time.OffsetDateTime.class).toInstant()
+                    t.get(4, Boolean.class),
+                    t.get(5, Boolean.class),
+                    t.get(6, java.time.OffsetDateTime.class).toInstant()
                     ))
             .collect(Collectors.toList());
 
@@ -85,12 +87,16 @@ public class MainController {
     
     @GetMapping("/details/{probe}/{identifier}")
     public String showDetails(@PathVariable String probe, @PathVariable String identifier, Model model) {
-        if (!probe.equalsIgnoreCase("getegrid") && !probe.equalsIgnoreCase("extract")) {
+        if (!probe.equalsIgnoreCase("versions") && !probe.equalsIgnoreCase("capabilities") && !probe.equalsIgnoreCase("getegrid") && !probe.equalsIgnoreCase("extract")) {
             return null; // TODO
         }
         
-        String className = "ch.so.agi.oereb.cts.GetEGRIDProbe";
-        if (probe.equalsIgnoreCase("extract")) {
+        String className = "ch.so.agi.oereb.cts.GetVersionsProbe";
+        if (probe.equalsIgnoreCase("capabilities")) {
+            className = "ch.so.agi.oereb.cts.GetCapabilitiesProbe";
+        } else if (probe.equalsIgnoreCase("getegrid")) {
+            className = "ch.so.agi.oereb.cts.GetExtractByIdProbe";
+        } else if (probe.equalsIgnoreCase("extract")) {
             className = "ch.so.agi.oereb.cts.GetExtractByIdProbe";
         }
         

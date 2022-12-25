@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.entity.CheckResult;
 import ch.so.agi.oereb.cts.entity.ProbeResult;
+import ch.so.agi.oereb.cts.GetCapabilitiesWrapper;
 import ch.so.agi.oereb.cts.GetEGRIDWrapper;
 import ch.so.agi.oereb.cts.GetExtractByIdWrapper;
+import ch.so.agi.oereb.cts.GetVersionsWrapper;
 import ch.so.agi.oereb.cts.Result;
 import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
 
@@ -48,6 +50,36 @@ public class OerebValidatorService {
     @Transactional
     public void validate(String identifier, String serviceEndpoint, Map<String,String> service) {
         probeResultRepository.deleteByIdentifier(identifier);
+        {
+            var wrapper = new GetVersionsWrapper();
+            var results = wrapper.run(serviceEndpoint, service);
+                            
+            for (Result pResult : results) {
+                ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                
+                for (Result cResult : pResult.getResults()) {
+                    CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                    probeResult.addCheckResult(checkResult);
+                }
+                
+                probeResultRepository.save(probeResult);
+            }
+        }
+        {
+            var wrapper = new GetCapabilitiesWrapper();
+            var results = wrapper.run(serviceEndpoint, service);
+                            
+            for (Result pResult : results) {
+                ProbeResult probeResult = modelMapper.map(pResult, ProbeResult.class);    
+                
+                for (Result cResult : pResult.getResults()) {
+                    CheckResult checkResult = modelMapper.map(cResult, CheckResult.class);
+                    probeResult.addCheckResult(checkResult);
+                }
+                
+                probeResultRepository.save(probeResult);
+            }
+        }
         {
             var wrapper = new GetEGRIDWrapper();
             var results = wrapper.run(serviceEndpoint, service);
