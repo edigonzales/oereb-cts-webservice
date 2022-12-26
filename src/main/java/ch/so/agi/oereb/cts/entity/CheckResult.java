@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -39,7 +40,8 @@ public class CheckResult {
 
     private boolean success;
     
-    @Column(length = 20000)
+    @Lob
+    //@Column(length = 20000)
     private String message;
     
     @Column(name = "status_code")
