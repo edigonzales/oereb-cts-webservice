@@ -95,7 +95,7 @@ public class MainController {
         if (probe.equalsIgnoreCase("capabilities")) {
             className = "ch.so.agi.oereb.cts.GetCapabilitiesProbe";
         } else if (probe.equalsIgnoreCase("getegrid")) {
-            className = "ch.so.agi.oereb.cts.GetExtractByIdProbe";
+            className = "ch.so.agi.oereb.cts.GetEGRIDProbe";
         } else if (probe.equalsIgnoreCase("extract")) {
             className = "ch.so.agi.oereb.cts.GetExtractByIdProbe";
         }
