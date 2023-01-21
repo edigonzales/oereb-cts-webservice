@@ -29,6 +29,7 @@ dependencies {
 
     implementation('io.github.sogis:oereb-cts:0.0.40+') { 
         exclude group: 'org.slf4j', module: 'slf4j-simple' 
+        exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency fon jaxb-api oder jaxb-impl.
     }
     
     // Wegen PDF-Validator. Warum funktioniert es aber in 
