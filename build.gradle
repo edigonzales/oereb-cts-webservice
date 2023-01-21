@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.0'
+	id 'org.springframework.boot' version '3.0.2'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.graalvm.buildtools.native' version '0.9.18'
 }
@@ -32,7 +32,8 @@ dependencies {
     }
     
     // Wegen PDF-Validator. Warum funktioniert es aber in 
-    // der Library ohne?
+    // der Library ohne? Wegen Spring Boot 3, das 
+    // den Jakarta-Namespace verwendet?
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.4'
     
