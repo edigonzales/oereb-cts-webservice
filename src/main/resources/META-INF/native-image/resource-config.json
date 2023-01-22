@@ -8,6 +8,9 @@
       "pattern":"\\QMETA-INF/services/java.sql.Driver\\E"
     }, 
     {
+      "pattern":"\\QMETA-INF/services/javax.xml.bind.JAXBContext\\E"
+    }, 
+    {
       "pattern":"\\QMETA-INF/services/javax.xml.transform.TransformerFactory\\E"
     }, 
     {
@@ -65,6 +68,15 @@
       "pattern":"\\Qch/so/agi/oereb/cts/service/OerebValidatorService.class\\E"
     }, 
     {
+      "pattern":"\\Qfont/AdobeGlyphList.txt\\E"
+    }, 
+    {
+      "pattern":"\\Qfont/cmap/Identity-H\\E"
+    }, 
+    {
+      "pattern":"\\Qfont/stdmetrics/Helvetica.afm\\E"
+    }, 
+    {
       "pattern":"\\Qjakarta/persistence/Tuple.class\\E"
     }, 
     {
@@ -99,6 +111,9 @@
     }, 
     {
       "pattern":"\\Qorg/hibernate/hibernate-mapping-3.0.dtd\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/mozilla/classfile/ClassFileWriter.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/beans/factory/Aware.class\\E"
@@ -1094,6 +1109,48 @@
       "pattern":"\\Qorg/thymeleaf/thymeleaf.properties\\E"
     }, 
     {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-1A.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-1B.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-2A.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-2B.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-2U.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-3A.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-3B.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-3U.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-4.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-4E.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFA-4F.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/pdfa/validation/PDFUA-1.xml\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/release/library.properties\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/verapdf/release/validation-model.properties\\E"
+    }, 
+    {
       "pattern":"\\Qorg/xml/sax/ErrorHandler.class\\E"
     }, 
     {
@@ -1103,10 +1160,10 @@
       "pattern":"\\Qstatic/css/oerebcts-gui.css\\E"
     }, 
     {
-      "pattern":"\\Qtemplates/\\E"
+      "pattern":"\\Qstatic/css/oerebcts.css\\E"
     }, 
     {
-      "pattern":"\\Qtemplates/details.html\\E"
+      "pattern":"\\Qtemplates/\\E"
     }, 
     {
       "pattern":"\\Qtemplates/gui.html\\E"
