@@ -12,7 +12,7 @@ jobs:
   build-native:
     env:
       DOCKER_ACCOUNT: sogis
-      DOCKER_REPO: oereb-cts
+      DOCKER_REPO: oereb-cts-native
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}} 
       BUILD_NUMBER: ${{ github.run_number }}
@@ -96,7 +96,7 @@ jobs:
   build-jvm:
     env:
       DOCKER_ACCOUNT: sogis
-      DOCKER_REPO: oereb-cts-jvm
+      DOCKER_REPO: oereb-cts
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}} 
       BUILD_NUMBER: ${{ github.run_number }}
