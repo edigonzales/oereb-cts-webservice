@@ -31,6 +31,23 @@ body, div {
     font-weight: 700;
 }
 
+#subtitle {
+    padding-top: 10px;
+    text-align: center;
+    color: #333333; 
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
 .styled-table {
     border-collapse: collapse;
     margin-top: 60px;
