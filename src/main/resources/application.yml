@@ -131,6 +131,12 @@ oereb:
           IDENTDN: SG0200320300
           NUMBER: C1556
           EGRID: CH427712875908
+        - identifier: SH
+          SERVICE_ENDPOINT: https://oereb.geo.sh.ch/
+          EN: 2688880,1284658 
+          IDENTDN: SH0200002939
+          NUMBER: 1582
+          EGRID: CH915411087888
         - identifier: SO
           SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
           EN: 2600595,1215629
