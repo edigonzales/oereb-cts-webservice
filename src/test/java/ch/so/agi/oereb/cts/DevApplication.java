@@ -15,23 +15,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Configuration
-//@ConditionalOnProperty(
-//        name = "spring.profiles.active",
-//        havingValue = "dev",
-//        matchIfMissing = false)
+@ConditionalOnProperty(
+        name = "spring.profiles.active",
+        havingValue = "dev",
+        matchIfMissing = false)
 public class DevApplication {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public static void main(String[] args) {
         SpringApplication.from(OerebCtsWebserviceApplication::main).run(args);
     }
-
-    // TODO:
-    // https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.docker-compose.custom-images
-    // -> muss die gleichen ENV haben.
     
     @Bean
-    CommandLineRunner devInit(JdbcConnectionDetails postgres) {
+    CommandLineRunner initDevEnvironment(JdbcConnectionDetails postgres) {
         return args -> {
             log.info("********"+postgres.getJdbcUrl());
             log.info(postgres.getUsername());
