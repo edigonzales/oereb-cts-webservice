@@ -9,29 +9,29 @@ management:
     readinessState:
       enabled: true
       
-spring:
-  datasource:
-    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb_dev
-    #url: jdbc:h2:file:./oerebctsdb_dev
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    show-sql: ${SHOW_SQL:true}
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-    #hibernate:
-      #ddl-auto: create
-  h2:
-    console:
-      enabled: ${ENABLE_DB_CONSOLE:true}
-      #path: /h2-ui
+#spring:
+#  datasource:
+#    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb_dev
+#    #url: jdbc:h2:file:./oerebctsdb_dev
+#    driverClassName: org.h2.Driver
+#    username: sa
+#    password:
+#  jpa:
+#    show-sql: ${SHOW_SQL:true}
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+#    #hibernate:
+#      #ddl-auto: create
+#  h2:
+#    console:
+#      enabled: ${ENABLE_DB_CONSOLE:true}
+#      #path: /h2-ui
 
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
-    ch.so.agi: ${LOG_LEVEL_APP:INFO} 
+    ch.so.agi: ${LOG_LEVEL_APP:DEBUG} 
     org.springframework.orm.jpa: ${LOG_LEVEL_DB:INFO} 
     org.springframework.transaction: ${LOG_LEVEL_DB:INFO}  
     org.hibernate.engine.transaction.internal.TransactionImpl: ${LOG_LEVEL_DB:INFO} 
@@ -60,12 +60,12 @@ oereb:
         #   IDENTDN: AR0200302400
         #   NUMBER: 123
         #   EGRID: CH795277802170
-        - identifier: BL
-          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
-          EN: 2611819,1260126
-          IDENTDN: BL0200002773
-          NUMBER: 6132
-          EGRID: CH767982496078
+#        - identifier: BL
+#          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
+#          EN: 2611819,1260126
+#          IDENTDN: BL0200002773
+#          NUMBER: 6132
+#          EGRID: CH767982496078
         # - identifier: BE
         #   SERVICE_ENDPOINT: https://www.oereb2.apps.be.ch/
         #   EN: 2600190,1199244

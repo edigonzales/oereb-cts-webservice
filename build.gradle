@@ -1,8 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.2'
-	id 'io.spring.dependency-management' version '1.1.0'
-	id 'org.graalvm.buildtools.native' version '0.9.18'
+	id 'org.springframework.boot' version '3.1.2'
+	id 'io.spring.dependency-management' version '1.1.2'
 }
 
 apply from: "$rootDir/gradle/versioning.gradle"
@@ -19,57 +18,52 @@ compileJava {
 repositories {
     mavenLocal()    
 	mavenCentral()
+    maven { url "https://jars.interlis.ch" }
+    maven { url "https://s01.oss.sonatype.org/service/local/repositories/releases/content/" }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    implementation('io.github.sogis:oereb-cts:0.0.41+') { 
+    implementation('io.github.sogis:oereb-cts:0.0.50+') { 
         exclude group: 'org.slf4j', module: 'slf4j-simple' 
-        exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency fon jaxb-api oder jaxb-impl.
+        exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency von jaxb-api oder jaxb-impl.
     }
     
     // Wegen PDF-Validator. Warum funktioniert es aber in 
     // der Library ohne? Wegen Spring Boot 3, das 
-    // den Jakarta-Namespace verwendet?
+    // den Jakarta-Namespace verwendet? 
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.4'
     
     implementation 'org.modelmapper:modelmapper:3.1.1'
     
-    runtimeOnly 'com.h2database:h2'
-
+    //runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.postgresql:postgresql' // In DevApplication wird org.postgresql.PGProperty verwendet, darum reicht runtimeOnly nicht.
+    
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'		
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
+test {
+    filter {
+        excludeTestsMatching "ch.so.agi.oereb.cts.DevApplication"
+    }
+ }
+
 bootJar {
    archiveName = baseName + "-" + version + "-exec.jar"
 }
 
-graalvmNative {
-    binaries {
-        main {
-            debug = false 
-            verbose = true 
-            fallback = false 
-            buildArgs.add('--enable-url-protocols=http,https') 
-            buildArgs.add("--libc=musl")
-            buildArgs.add("--static")   
-        }
-        /*
-        test {
-            verbose = true
-            fallback = false 
-            buildArgs.add('--enable-url-protocols=http,https') 
-        }
-        */
-    }
-}
+

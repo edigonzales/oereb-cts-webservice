@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -20,13 +21,17 @@ public class OerebCtsWebserviceApplication {
 
     // CommandLineRunner: Anwendung ist fertig gestartet. 
     // Kubernetes: Live aber nicht ready.
+    @ConditionalOnProperty(
+            name = "app.validateOnStartup",
+            havingValue = "true",
+            matchIfMissing = false)
     @Bean
     CommandLineRunner init(OerebValidatorService validator, ServiceProperties serviceProperties) {
         return args -> {
-            for(Map<String,String> service : serviceProperties.getServices()) {
-                String identifier = service.get("identifier");
-                String serviceEndpoint = service.get("SERVICE_ENDPOINT"); 
-                validator.validate(identifier, serviceEndpoint, service);
+            for(Map<String,String> params : serviceProperties.getServices()) {
+                String identifier = params.get(TestSuite.PARAM_IDENTIFIER);
+                String serviceEndpoint = params.get(TestSuite.PARAM_SERVICE_ENDPOINT); 
+                validator.validate(identifier, serviceEndpoint, params);
             }
         };
     }

@@ -1,0 +1,44 @@
+version: '3'
+services:
+  # edit-db:
+  #   image: sogis/postgis:15-3.3
+  #   environment:
+  #     POSTGRES_DB: edit
+  #     POSTGRES_HOST_AUTH_METHOD: md5
+  #     PGPORT: 5432
+  #     PGUSER: postgres
+  #     PG_USER: ddluser
+  #     PG_PASSWORD: ddluser
+  #     POSTGRES_PASSWORD: secret
+  #     PG_DATA: /pgdata
+  #   ports:
+  #     - "54321:5432"
+  #   volumes:
+  #     - ./initdb-user.sh:/docker-entrypoint-initdb.d/20_initdb-user.sh
+  #   command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=200
+  #   labels:
+  #     org.springframework.boot.service-connection: postgres
+
+
+  edit-db:
+    image: bitnami/postgresql:14.8.0-debian-11-r74
+    environment:
+      POSTGRESQL_DATABASE: edit
+      POSTGRESQL_USERNAME: ddluser
+      POSTGRESQL_PASSWORD: ddluser
+      POSTGRES_PASSWORD: ddluser
+      POSTGRESQL_POSTGRES_PASSWORD: secret
+      POSTGRESQL_INITSCRIPTS_USERNAME: postgres
+      POSTGRESQL_INITSCRIPTS_PASSWORD: secret
+      #POSTGRESQL_INITDB_ARGS: --locale=de_CH.UTF-8
+    ports:
+      - "54321:5432"
+    volumes:
+      - type: bind
+        source: ./setup.sql
+        target: /docker-entrypoint-preinitdb.d/setup.sql
+      - type: bind
+        source: ./prepare_setup.sh
+        target: /docker-entrypoint-preinitdb.d/prepare_setup.sh
+    labels:
+      org.springframework.boot.service-connection: postgres
