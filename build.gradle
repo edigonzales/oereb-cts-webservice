@@ -34,9 +34,7 @@ dependencies {
         exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency von jaxb-api oder jaxb-impl.
     }
     
-    // Wegen PDF-Validator. Warum funktioniert es aber in 
-    // der Library ohne? Wegen Spring Boot 3, das 
-    // den Jakarta-Namespace verwendet? 
+    // Wegen Spring Boot 3, das den Jakarta-Namespace verwendet? 
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.4'
     
@@ -49,7 +47,7 @@ dependencies {
     testImplementation 'org.postgresql:postgresql' // In DevApplication wird org.postgresql.PGProperty verwendet, darum reicht runtimeOnly nicht.
     
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 }
 
 tasks.named('test') {

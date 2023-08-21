@@ -33,6 +33,7 @@ public class DevApplication {
             log.info(postgres.getUsername());
             log.info(postgres.getPassword());
             
+            System.out.println("aa");
             
 //            Config settings = new Config();
 //            new PgMain().initConfig(settings);
