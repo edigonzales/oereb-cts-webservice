@@ -8,7 +8,14 @@ management:
       enabled: true
     readinessState:
       enabled: true
-      
+     
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:54321/edit
+    driverClassName: org.postgresql.Driver
+    username: ddluser
+    password: ddluser
+ 
 #spring:
 #  datasource:
 #    url: jdbc:h2:file:/Users/stefan/tmp/oerebctsdb_dev
@@ -39,6 +46,14 @@ logging:
 app:
   #repositoryStorage: ${REPOSITORY_STORAGE:#{systemProperties['java.io.tmpdir']}}
   checkCronExpression: ${CHECK_CRON_EXPRESSION:0 0 */4 * * *}
+  workDirectory: ${WORK_DIRECTORY:/tmp/}
+  folderPrefix: ${FOLDER_PREFIX:ilivalidatorws_}
+  database:
+    #schema: ${DB_SCHEMA:agi_oereb_cts_v1}
+    testQuery: ${DB_TEST_QUERY:SELECT * FROM agi_oereb_cts_v1.proberesult LIMIT 1}
+    createOnStartup: ${DB_CREATE_ON_STARTUP:true}
+  testSuite:
+    validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:true}
 
 oereb: 
     services:
@@ -156,12 +171,12 @@ oereb:
         #   #IDENTDN= fehlt in XML
         #   #NUMBER=6918
         #   EGRID: CH595290323059
-        - identifier: ZG
-          SERVICE_ENDPOINT: https://oereb.zg.ch/ors/
-          EN: 2681396,1225658
-          IDENTDN: ZG0200001711
-          NUMBER: 289
-          EGRID: CH187006657415
+#        - identifier: ZG
+#          SERVICE_ENDPOINT: https://oereb.zg.ch/ors/
+#          EN: 2681396,1225658
+#          IDENTDN: ZG0200001711
+#          NUMBER: 289
+#          EGRID: CH187006657415
         # - identifier: ZH
         #   SERVICE_ENDPOINT: https://maps.zh.ch/oereb/v2/
         #   EN: 2683914,1248184

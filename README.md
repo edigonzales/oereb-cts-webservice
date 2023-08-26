@@ -10,8 +10,9 @@ Man kann während des Entwickelns automatisch Container mit einem docker-compose
 
 Für Entwicklungen, die eher eine "statische" DB benötigen, kann die DB mit dem docker-compose-File manuell hochgefahren werden und Daten mit _ili2db_ importiert werden:
 
+PostgreSQL:
 ```
-java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr ddluser --dbpwd ddluser --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/  --schemaimport
+java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr ddluser --dbpwd ddluser --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs	--createBasketCol --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ --schemaimport
 ```
 
 ```
@@ -19,6 +20,21 @@ java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatab
 ```
 
 **FIXME**: modeldir nicht mehr notwendig, wenn in Repo.
+
+GeoPackage:
+
+
+
+
+Sql-Datei für erstmaligen DB-Start in Prod:
+```
+java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
+```
+
+```
+java -jar /Users/stefan/apps/ili2gpkg-4.11.0/ili2gpkg-4.11.0.jar --createscript oereb-cts-gpkg.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
+```
+
 
 ### Build
 

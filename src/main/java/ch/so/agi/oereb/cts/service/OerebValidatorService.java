@@ -32,6 +32,8 @@ public class OerebValidatorService {
 
     @Autowired
     ServiceProperties serviceProperties;
+    
+   
 
 //    @Autowired
 //    ProbeResultRepository probeResultRepository;
@@ -64,6 +66,8 @@ public class OerebValidatorService {
         File workDirectory = Files.createTempDirectory(Paths.get(System.getProperty("java.io.tmpdir")), workDirectoryPrefix).toFile();
         String logFile = Paths.get(workDirectory.getAbsolutePath(), "cts-"+identifier+".xtf").toFile().getAbsolutePath();
         settings.setValue(TestSuite.SETTING_LOGFILE, logFile);
+        
+        // TODO: Forschleife hier? Wegen testSuiteTime?
         
         TestSuite testSuite = new TestSuite();
         //testSuite.run(params, settings);
