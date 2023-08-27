@@ -29,5 +29,10 @@ services:
       - type: bind
         source: ./prepare_setup.sh
         target: /docker-entrypoint-preinitdb.d/prepare_setup.sh
+      - type: volume
+        source: postgresql_data_edit
+        target: /bitnami/postgresql
     labels:
       org.springframework.boot.service-connection: postgres
+volumes:
+  postgresql_data_edit:

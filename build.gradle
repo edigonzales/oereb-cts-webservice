@@ -29,10 +29,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     
     implementation 'ch.interlis:ili2pg:4.11.0'
-    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    implementation('io.github.sogis:oereb-cts:0.0.54+') { 
-        exclude group: 'org.slf4j', module: 'slf4j-simple' 
+    implementation('io.github.sogis:oereb-cts:0.0.58+') { 
+        exclude group: 'org.slf4j', module: 'slf4j-simple' // TODO: Woher kommt das?
         exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency von jaxb-api oder jaxb-impl.
     }
     
@@ -40,13 +39,10 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.4'
     
-    implementation 'org.modelmapper:modelmapper:3.1.1'
-    
-    //runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.postgresql:postgresql' // In DevApplication wird org.postgresql.PGProperty verwendet, darum reicht runtimeOnly nicht.
+    //testImplementation 'org.postgresql:postgresql'
     
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'

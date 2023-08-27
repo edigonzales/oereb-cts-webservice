@@ -29,7 +29,7 @@ public class DevApplication {
     @Bean
     CommandLineRunner initDevEnvironment(JdbcConnectionDetails postgres) {
         return args -> {
-            log.info("********"+postgres.getJdbcUrl());
+            log.info(postgres.getJdbcUrl());
             log.info(postgres.getUsername());
             log.info(postgres.getPassword());
             

@@ -4,6 +4,7 @@ CREATE SEQUENCE agi_oereb_cts_v1.t_ili2db_seq;;
 CREATE TABLE agi_oereb_cts_v1.checkresult (
   T_Id bigint PRIMARY KEY DEFAULT nextval('agi_oereb_cts_v1.t_ili2db_seq')
   ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
   ,T_Seq bigint NULL
   ,adescription text NULL
   ,statuscode integer NULL
@@ -17,11 +18,13 @@ CREATE TABLE agi_oereb_cts_v1.checkresult (
 )
 ;
 CREATE INDEX checkresult_t_basket_idx ON agi_oereb_cts_v1.checkresult ( t_basket );
+CREATE INDEX checkresult_t_datasetname_idx ON agi_oereb_cts_v1.checkresult ( t_datasetname );
 CREATE INDEX checkresult_proberesult_checkresults_idx ON agi_oereb_cts_v1.checkresult ( proberesult_checkresults );
 -- SO_AGI_OEREB_CTS_20230819.ProbeResult
 CREATE TABLE agi_oereb_cts_v1.proberesult (
   T_Id bigint PRIMARY KEY DEFAULT nextval('agi_oereb_cts_v1.t_ili2db_seq')
   ,T_basket bigint NOT NULL
+  ,T_datasetname varchar(200) NOT NULL
   ,T_Type varchar(60) NOT NULL
   ,T_Ili_Tid varchar(200) NULL
   ,T_Seq bigint NULL
@@ -38,6 +41,7 @@ CREATE TABLE agi_oereb_cts_v1.proberesult (
 )
 ;
 CREATE INDEX proberesult_t_basket_idx ON agi_oereb_cts_v1.proberesult ( t_basket );
+CREATE INDEX proberesult_t_datasetname_idx ON agi_oereb_cts_v1.proberesult ( t_datasetname );
 CREATE TABLE agi_oereb_cts_v1.T_ILI2DB_BASKET (
   T_Id bigint PRIMARY KEY
   ,dataset bigint NULL
@@ -251,13 +255,14 @@ VERSION "2023-08-19" =
 
   END Results;
 
-END SO_AGI_OEREB_CTS_20230819.','2023-08-27 19:28:07.343');
+END SO_AGI_OEREB_CTS_20230819.','2023-08-27 19:22:53.456');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createMetaInfo','True');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.SqlNull','enable');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.interlis.ili2c.ilidirs','../oereb-cts/lib/src/main/resources/ili/');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.arrayTrafo','coalesce');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.importTabs','simple');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createForeignKeyIndex','yes');
+INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createDatasetCols','addDatasetCol');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.localisedTrafo','expand');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.jsonTrafo','coalesce');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.sender','ili2pg-4.11.0-eb9c1ad2e5db64e1826ef16cd9d77ab25879547a');

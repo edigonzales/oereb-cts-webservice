@@ -1,6 +1,7 @@
 package ch.so.agi.oereb.cts;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +28,15 @@ public class OerebCtsWebserviceApplication {
     @Value("${app.database.createOnStartup}")
     private boolean databaseCreateOnStartup;
 
+//    @Value("${spring.datasource.url}")
+//    private String datasourceUrl;
+//
+//    @Value("${spring.datasource.username}")
+//    private String datasourceUsername;
+//
+//    @Value("${spring.datasource.password}")
+//    private String datasourcePassword;
+
     @Value("${app.database.testQuery}")
     private String databaseTestQuery;
 
@@ -46,15 +56,17 @@ public class OerebCtsWebserviceApplication {
     CommandLineRunner init(CtsService ctsService) {
         return args -> {    
             if (databaseCreateOnStartup) {
-                try (Connection con = dataSource.getConnection();
-                        Statement stmt = con.createStatement();
+                //Connection con = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
+                Connection con = dataSource.getConnection();
+                
+                try (con; Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(databaseTestQuery)) {
                     log.info("Database schema exists already.");
                 } catch (SQLException e) {
                     log.warn("Database schema does not exists. Schema will be created.");
 
-                    try (Connection con = dataSource.getConnection(); Statement stmt = con.createStatement()) {
-                        String query = Utils.loadString("oereb-cts-postgres.sql");
+                    try (con; Statement stmt = con.createStatement()) {
+                        String query = Util.loadString("oereb-cts-postgres.sql");
                         stmt.execute(query);
                     } catch (SQLException ex) {
                         ex.printStackTrace();

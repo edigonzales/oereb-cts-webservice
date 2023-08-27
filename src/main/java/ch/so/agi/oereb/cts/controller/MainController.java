@@ -13,12 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.so.agi.oereb.cts.ServiceProperties;
-//import ch.so.agi.oereb.cts.dto.ProbeResultDTO;
-//import ch.so.agi.oereb.cts.dto.ProbeSummaryDTO;
-//import ch.so.agi.oereb.cts.entity.ProbeResult;
-//import ch.so.agi.oereb.cts.repository.ProbeResultRepository;
-import ch.so.agi.oereb.cts.service.OerebValidatorService;
-//import jakarta.persistence.Tuple;
+import ch.so.agi.oereb.cts.service.CtsService;
 
 import java.util.Date;
 import java.util.List;
@@ -32,7 +27,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.time.Instant;
 
-import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +36,11 @@ import org.slf4j.LoggerFactory;
 public class MainController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${app.workDirectoryPrefix}")
-    private String workDirectoryPrefix;
+    @Value("${app.workDirectory}")
+    private String workDirectory;
+
+    @Value("${app.folderPrefix}")
+    private String folderPrefix;
 
     @Autowired
     ServiceProperties serviceProperties;
@@ -51,9 +49,9 @@ public class MainController {
 //    ProbeResultRepository probeResultRepository;
 
     @Autowired
-    OerebValidatorService validator;
+    CtsService ctsService;
     
-    private ModelMapper modelMapper = new ModelMapper();
+//    private ModelMapper modelMapper = new ModelMapper();
     
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
@@ -122,24 +120,21 @@ public class MainController {
     @Scheduled(cron="${app.checkCronExpression}")
     //@Scheduled(cron="0 */4 * * * *")
     private void checkRepos() throws IOException {
-        log.info("Validating...");
-        for(Map<String,String> service : serviceProperties.getServices()) {
-            String identifier = service.get("identifier");
-            String serviceEndpoint = service.get("SERVICE_ENDPOINT");
-            validator.validate(identifier, serviceEndpoint, service);
-        }
+        log.info("Validating by scheduler.");
+        ctsService.validate();
     }
     
     @Scheduled(cron="0 0/6 * * * *")
     private void cleanUp() {    
-        log.debug("Deleting old files...");
-        File workDirectory = Paths.get(System.getProperty("java.io.tmpdir")).toFile();        
-        String workDirectoryPrefix = "oerebcts";
-        
-        File[] tmpDirs = workDirectory.listFiles();
+        log.debug("Deleting files from passed validation runs...");
+        // workDirectory und folderPrefix werden in den Properties gesteuert und
+        // und müssen gleich sein wie in der cts library.
+        // Falls sie nicht identisch sind, müssen sie entweder in den Properties
+        // separat behandelt werden oder hier hardcodiert werden.
+        File[] tmpDirs = Paths.get(workDirectory).toFile().listFiles();
         if(tmpDirs!=null) {
             for (java.io.File tmpDir : tmpDirs) {
-                if (tmpDir.getName().startsWith(workDirectoryPrefix)) {
+                if (tmpDir.getName().startsWith(folderPrefix)) {
                     try {
                         FileTime creationTime = (FileTime) Files.getAttribute(Paths.get(tmpDir.getAbsolutePath()), "creationTime");                    
                         Instant now = Instant.now();

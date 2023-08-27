@@ -1,5 +1,12 @@
 # oereb-cts-webservice
 
+## Verbesserungen
+
+- Brauche ich Connection-Pool / Datasource? Wenn es nur um das Importieren geht, dann eher nicht. Wenn das GUI auch hier implementiert wird, wohl schon.
+- Vielleicht gibt es sinnvolle Unterscheidungen bei den Exception, wenn beim Hochfahren gleich auch validiert wird. Stand heute wird bei einer Exception der Server wieder runtergefahren.
+- JobRunr: damit können einfach mehrere Worker die Arbeit erledigen.
+
+
 ## Entwicklung
 
 ### Run
@@ -11,7 +18,7 @@ Man kann während des Entwickelns automatisch Container mit einem docker-compose
 Für Entwicklungen, die eher eine "statische" DB benötigen, kann die DB mit dem docker-compose-File manuell hochgefahren werden und Daten mit _ili2db_ importiert werden:
 
 ```
-java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr ddluser --dbpwd ddluser --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs	--createBasketCol --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ --schemaimport
+java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatabase edit --dbport 54321 --dbusr ddluser --dbpwd ddluser --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs	--createBasketCol --createFk --createFkIdx --sqlEnableNull --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ --schemaimport
 ```
 
 ```
@@ -26,8 +33,12 @@ java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatab
 
 Sql-Datei für erstmaligen DB-Start in Prod:
 ```
-java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createFk --createFkIdx --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
+java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createDatasetCol --createFk --createFkIdx --sqlEnableNull --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
+
+java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createFk --createFkIdx --sqlEnableNull --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
 ```
+
+
 
 
 ### Build
