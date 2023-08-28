@@ -57,15 +57,13 @@ public class OerebCtsWebserviceApplication {
         return args -> {    
             if (databaseCreateOnStartup) {
                 //Connection con = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
-                Connection con = dataSource.getConnection();
-                
-                try (con; Statement stmt = con.createStatement();
+                try (Connection con = dataSource.getConnection(); Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(databaseTestQuery)) {
                     log.info("Database schema exists already.");
                 } catch (SQLException e) {
                     log.warn("Database schema does not exists. Schema will be created.");
 
-                    try (con; Statement stmt = con.createStatement()) {
+                    try (Connection con = dataSource.getConnection(); Statement stmt = con.createStatement()) {
                         String query = Util.loadString("oereb-cts-postgres.sql");
                         stmt.execute(query);
                     } catch (SQLException ex) {
