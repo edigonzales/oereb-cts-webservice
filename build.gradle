@@ -45,7 +45,7 @@ dependencies {
 
     implementation 'org.joinfaces:faces-spring-boot-starter'
     implementation 'org.joinfaces:primefaces-spring-boot-starter'
-    implementation group: 'org.webjars.npm', name: 'primeflex', version: '2.0.0'
+    implementation 'org.webjars.npm:primeflex:3.3.1'
 
     implementation('io.github.sogis:oereb-cts:0.0.58+') { 
         exclude group: 'org.slf4j', module: 'slf4j-simple' // TODO: Woher kommt das?
