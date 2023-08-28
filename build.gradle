@@ -1,10 +1,14 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.1.2'
+	id 'org.springframework.boot' version '3.1.3'
 	id 'io.spring.dependency-management' version '1.1.2'
+	//id "org.joinfaces" version "5.1.3"
+	
 }
 
 apply from: "$rootDir/gradle/versioning.gradle"
+//apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'ch.so.agi'
 
@@ -15,12 +19,21 @@ compileJava {
     options.compilerArgs.addAll(['--release', '17'])
 }
 
+
 repositories {
     mavenLocal()    
 	mavenCentral()
     maven { url "https://jars.interlis.ch" }
     maven { url "https://s01.oss.sonatype.org/service/local/repositories/releases/content/" }
 }
+
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.joinfaces:joinfaces-dependencies:5.1.3'
+    }
+}
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -29,6 +42,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     
     implementation 'ch.interlis:ili2pg:4.11.0'
+
+    implementation 'org.joinfaces:faces-spring-boot-starter'
+    implementation 'org.joinfaces:primefaces-spring-boot-starter'
+    implementation group: 'org.webjars.npm', name: 'primeflex', version: '2.0.0'
 
     implementation('io.github.sogis:oereb-cts:0.0.58+') { 
         exclude group: 'org.slf4j', module: 'slf4j-simple' // TODO: Woher kommt das?
