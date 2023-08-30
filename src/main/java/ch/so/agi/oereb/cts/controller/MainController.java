@@ -126,7 +126,7 @@ public class MainController {
     
     @Scheduled(cron="0 0/6 * * * *")
     private void cleanUp() {    
-        log.debug("Deleting files from passed validation runs...");
+        log.debug("Deleting files from previous validation runs...");
         // workDirectory und folderPrefix werden in den Properties gesteuert und
         // und müssen gleich sein wie in der cts library.
         // Falls sie nicht identisch sind, müssen sie entweder in den Properties
