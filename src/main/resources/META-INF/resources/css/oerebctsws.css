@@ -1,0 +1,35 @@
+.badge-success {
+    background-color: #b3e5fc !important;
+    color: #23547b !important;
+    width: 80px;
+    border-radius: 2px !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+
+.badge-failure {
+    background-color: #ffd8b2 !important;
+    color: #805b36 !important;
+    width: 80px;
+    border-radius: 2px !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+
+.black-link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333333; 
+    text-decoration: underline !important;
+}
+
+a.black-link:hover {
+    color: #333333;
+    text-decoration: underline !important;
+}  
+
+a.black-link:visited {
+    color: #333333; 
+    text-decoration: underline !important;
+}  
+

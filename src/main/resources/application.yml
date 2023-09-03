@@ -30,7 +30,7 @@ app:
     testQuery: ${DB_TEST_QUERY:SELECT * FROM agi_oereb_cts_v1.proberesult LIMIT 1}
     createOnStartup: ${DB_CREATE_ON_STARTUP:true}
   testSuite:
-    validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:true}
+    validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:false}
 
 oereb: 
     services:

@@ -20,7 +20,7 @@ logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
     ch.so.agi.oereb: ${LOG_LEVEL_APP:DEBUG} 
-    com.zaxxer.hikari: ${LOG_LEVEL_DB_CONNECTION_POOL:debug}
+    com.zaxxer.hikari: ${LOG_LEVEL_DB_CONNECTION_POOL:INFO}
 
 joinfaces:
   faces:
