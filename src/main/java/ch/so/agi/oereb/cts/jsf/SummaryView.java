@@ -70,26 +70,16 @@ public class SummaryView {
 
     private String getQuery() {
         String query = """
-WITH latest AS 
-(
-    SELECT 
-        identifier, serviceendpoint, max(testsuitetime) AS testsuitetime, max(starttime) AS starttime
-    FROM 
-        agi_oereb_cts_v1.proberesult 
-    GROUP BY 
-        identifier, serviceendpoint
-)
-,
-getversions AS 
+WITH getversions AS 
 (
     SELECT
-        identifier, bool_and(success) AS success_versions, testsuitetime
+        identifier,  serviceendpoint, bool_and(success) AS success_versions, testsuitetime, max(starttime) AS starttime
     FROM 
         agi_oereb_cts_v1.proberesult
     WHERE 
         classname = 'ch.so.agi.oereb.cts.GetVersionsProbe'
     GROUP BY 
-        identifier, testsuitetime  
+        identifier, testsuitetime, serviceendpoint 
 )
 ,
 getcapabilities AS 
@@ -128,30 +118,24 @@ getextract AS
         identifier, testsuitetime  
 )
 SELECT 
-    latest.identifier,
-    latest.serviceendpoint,
-    latest.testsuitetime,
+    getversions.identifier,
+    getversions.serviceendpoint,
+    getversions.testsuitetime,
+    getversions.starttime,
     getversions.success_versions,
     getcapabilities.success_capabilities,
     getegrid.success_egrid,
-    getextract.success_extract,
-    latest.starttime 
+    getextract.success_extract
 FROM 
-    latest
-    LEFT JOIN getversions
-    ON latest.identifier = getversions.identifier
-    AND latest.testsuitetime = getversions.testsuitetime
+    getversions
     LEFT JOIN getcapabilities
-    ON latest.identifier = getcapabilities.identifier
-    AND latest.testsuitetime = getcapabilities.testsuitetime
+    ON getversions.identifier = getcapabilities.identifier
     LEFT JOIN getegrid
-    ON latest.identifier = getegrid.identifier
-    AND latest.testsuitetime = getegrid.testsuitetime
+    ON getversions.identifier = getegrid.identifier
     LEFT JOIN getextract
-    ON latest.identifier = getextract.identifier
-    AND latest.testsuitetime = getextract.testsuitetime    
+    ON getversions.identifier = getextract.identifier
 ORDER BY 
-    latest.identifier ASC
+    getversions.identifier ASC                
                 """;
         return query;
     }

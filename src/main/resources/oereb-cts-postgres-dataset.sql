@@ -228,7 +228,7 @@ VERSION "2023-08-19" =
     success : MANDATORY BOOLEAN;
     startTime : MANDATORY FORMAT INTERLIS.XMLDateTime "2000-01-01T00:00:00.000" .. "2100-12-31T23:59:59.999";
     endTime : FORMAT INTERLIS.XMLDateTime "2000-01-01T00:00:00.000" .. "2100-12-31T23:59:59.999";
-    processingTimeSecs : MANDATORY 0.000 .. 3600.000 [INTERLIS.s];
+    processingTimeSecs : 0.000 .. 3600.000 [INTERLIS.s];
   END Result;
 
   STRUCTURE CheckResult EXTENDS Result =
@@ -255,7 +255,7 @@ VERSION "2023-08-19" =
 
   END Results;
 
-END SO_AGI_OEREB_CTS_20230819.','2023-08-27 19:22:53.456');
+END SO_AGI_OEREB_CTS_20230819.','2023-09-04 19:33:39.367');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.createMetaInfo','True');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.ehi.ili2db.SqlNull','enable');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_SETTINGS (tag,setting) VALUES ('ch.interlis.ili2c.ilidirs','../oereb-cts/lib/src/main/resources/ili/');
@@ -300,7 +300,7 @@ INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_valu
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.Result.endTime','ili2db.ili.attrCardinalityMax','1');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.Result.endTime','ili2db.ili.attrCardinalityMin','0');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.Result.processingTimeSecs','ili2db.ili.attrCardinalityMax','1');
-INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.Result.processingTimeSecs','ili2db.ili.attrCardinalityMin','1');
+INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.Result.processingTimeSecs','ili2db.ili.attrCardinalityMin','0');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.CheckResult.description','ili2db.ili.attrCardinalityMax','1');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.CheckResult.description','ili2db.ili.attrCardinalityMin','0');
 INSERT INTO agi_oereb_cts_v1.T_ILI2DB_META_ATTRS (ilielement,attr_name,attr_value) VALUES ('SO_AGI_OEREB_CTS_20230819.ProbeResult.resultFileLocation','ili2db.ili.attrCardinalityMax','1');

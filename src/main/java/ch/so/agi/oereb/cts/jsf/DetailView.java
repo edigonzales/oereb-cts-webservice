@@ -98,30 +98,27 @@ public class DetailView {
     private String getQuery() {
         // starttime wird nur für die Sortierung benötigt.
         String query = """
-WITH latest AS 
+WITH probe AS 
 (
     SELECT 
-        t_id, classname, identifier, serviceendpoint, request, max(testsuitetime) AS testsuitetime, starttime
+        t_id, classname, identifier, serviceendpoint, request, testsuitetime, starttime
     FROM 
         agi_oereb_cts_v1.proberesult 
     WHERE 
-        identifier = 'TG'
-    GROUP BY 
-        t_id, classname, identifier, serviceendpoint, request, starttime  
+        identifier = 'AG'
 )
 SELECT 
-    --latest.request AS request,    
-    json_build_object('starttime', latest.starttime, 'request', latest.request, 'checkResults', json_agg(c.* ORDER BY t_seq)) AS probe_results
+    json_build_object('starttime', probe.starttime, 'request', probe.request, 'checkResults', json_agg(c.* ORDER BY t_seq)) AS probe_results
 FROM 
-    latest
+    probe
     LEFT JOIN agi_oereb_cts_v1.checkresult AS c
-    ON c.proberesult_checkresults = latest.t_id
+    ON c.proberesult_checkresults = probe.t_id
 WHERE 
-    latest.classname = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
+    probe.classname = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
 GROUP BY 
-    latest.request, latest.starttime
+    probe.request, probe.starttime
 ORDER BY 
-    latest.starttime ASC
+    probe.starttime ASC                
                                 """;
         return query;
     }

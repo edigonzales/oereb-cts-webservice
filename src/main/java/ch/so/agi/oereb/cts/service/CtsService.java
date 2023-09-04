@@ -101,10 +101,14 @@ public class CtsService {
 
             Config config = new Config();
             new PgMain().initConfig(config);
-            config.setFunction(Config.FC_IMPORT);
+            config.setFunction(Config.FC_REPLACE);
+            //config.setValidation(false);
             config.setModeldir(iliFile.getParent()+";https://geo.so.ch/models;http://models.geo.admin.ch");
             config.setModels("SO_AGI_OEREB_CTS_20230819");
             config.setBasketHandling(Config.BASKET_HANDLING_READWRITE);
+            System.out.println("**: "+params.get(TestSuite.PARAM_IDENTIFIER));
+            config.setDatasetName(params.get(TestSuite.PARAM_IDENTIFIER));
+            System.out.println("**: "+config.getDatasetName());
                         
             config.setDbhost(dbHost);
             config.setDbport(dbPort);
@@ -117,6 +121,7 @@ public class CtsService {
             config.setXtffile(logFile);  
 
             try {
+                Ili2db.readSettingsFromDb(config); // Sonst funktioniert dataset nicht.
                 Ili2db.run(config, null);
             } catch (Ili2dbException e) {
                 log.warn(e.getMessage());

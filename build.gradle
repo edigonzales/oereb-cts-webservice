@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.joinfaces:primefaces-spring-boot-starter'
     implementation 'org.webjars.npm:primeflex:3.3.1'
 
-    implementation('io.github.sogis:oereb-cts:0.0.58+') { 
+    implementation('io.github.sogis:oereb-cts:0.0.61+') { 
         exclude group: 'org.slf4j', module: 'slf4j-simple' // TODO: Woher kommt das?
         exclude group: 'com.sun.xml.bind', module: 'jaxb-core' // org.verapdf:core direkt. Nicht transitive Dependency von jaxb-api oder jaxb-impl.
     }
