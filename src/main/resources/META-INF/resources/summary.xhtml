@@ -16,11 +16,10 @@
     </h:head>
 
     <h:body>
-        <h:outputText value="#{dummy.text}" />
+        <!-- <h:outputText value="#{dummy.text}" /> -->
 
-        <h2>ÖREB-Kataster Compliance Test Suite</h2>
 
-        <p:divider />
+        <!-- <p:divider /> -->
 <!--
 <ui:repeat value="#{probeResultView.results}" var="result">
     #{result.identifier()}
@@ -30,7 +29,9 @@
 
 		 <!--<h:form >-->
              <!-- <div class="card" style="height:80vh;">--> 
-             <div class="card" style="height:80vh;"> 
+             <div id="container"> 
+                <div id="title">ÖREB-Kataster Compliance Test Suite</div>
+                          
 		        <p:dataTable id="result-table" var="result" value="#{summaryView.results}" reflow="true">
 		        <!--<p:dataTable id="result-table" var="result" value="#{summaryView.results}" reflow="true" scrollable="true" scrollHeight="100%">-->
 
@@ -38,15 +39,15 @@
 https://balusc.omnifaces.org/2020/11/using-java-14-records-in-jsf-via-eclipse.html
 Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (mit Klammer).
  -->
-		            <p:column id="result-table-column-ident" headerText="Ident" >
+		            <p:column id="result-table-column-ident" headerText="Ident" style="width:3%">
 		                <h:outputText value="#{result.identifier()}" />
 		            </p:column>
 		
-		            <p:column id="result-table-column-serviceendpoint" headerText="Service Endpoint">
+		            <p:column id="result-table-column-serviceendpoint" headerText="Service Endpoint" style="width:27%">
 		                <h:outputText value="#{result.serviceEndpoint()}" />
 		            </p:column>
 		
-		            <p:column id="result-table-column-successversions" headerText="Versions">		                
+		            <p:column id="result-table-column-successversions" headerText="Versions" style="width:14%">		                
                         <!-- <p:badge value="SUCCESS" styleClass="badge-success" rendered="#{result.successVersions()}"></p:badge> -->		                
                         <p:badge value="#{result.successVersions() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successVersions() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
@@ -61,8 +62,28 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
 		                <h:outputText value="#{product.quantity}" />
 		            </p:column>
  -->
- 
-                    <p:column id="result-table-column-successextract" headerText="Extract">                       
+
+                    <p:column id="result-table-column-successcapabilities" headerText="Capabilities" style="width:14%">                       
+                        <p:badge value="#{result.successCapabilities() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successCapabilities() ? 'badge-success' : 'badge-failure'}"></p:badge>
+                        &nbsp;
+                        <h:link outcome="detail" class="black-link" target="_blank">
+                            <f:param name="identifier" value="#{result.identifier()}" />
+                            <f:param name="probe" value="extract" />
+                            <i class="pi pi-external-link"></i>
+                        </h:link>
+                    </p:column>
+
+                    <p:column id="result-table-column-successegrid" headerText="Egrid" style="width:14%">                       
+                        <p:badge value="#{result.successEgrid() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successEgrid() ? 'badge-success' : 'badge-failure'}"></p:badge>
+                        &nbsp;
+                        <h:link outcome="detail" class="black-link" target="_blank">
+                            <f:param name="identifier" value="#{result.identifier()}" />
+                            <f:param name="probe" value="extract" />
+                            <i class="pi pi-external-link"></i>
+                        </h:link>
+                    </p:column>
+                     
+                    <p:column id="result-table-column-successextract" headerText="Extract" style="width:14%">                       
                         <p:badge value="#{result.successExtract() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successExtract() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
                         <h:link outcome="detail" class="black-link" target="_blank">
@@ -72,7 +93,7 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
                         </h:link>
                     </p:column>
  
-                    <p:column id="result-table-column-starttime" headerText="Last Validation">
+                    <p:column id="result-table-column-starttime" headerText="Last Validation" style="width:14%">
                         <h:outputText value="#{result.startTime()}">
                             <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:MM:ss"/>
                         </h:outputText>
