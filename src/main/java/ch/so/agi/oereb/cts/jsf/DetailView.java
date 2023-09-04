@@ -77,6 +77,8 @@ public class DetailView {
                 ProbeResult probeResult = null;
                 try {
                     probeResult = objectMapper.readValue(probeResults, ProbeResult.class);
+                    
+                    
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                     return null;
