@@ -96,13 +96,13 @@ public class CtsService {
             TestSuite testSuite = new TestSuite();
             testSuite.run(params, settings);
             
-            File iliFile = Util.copyResourceToTmpDir("ili/SO_AGI_OEREB_CTS_20230819.ili");
+            File iliFile = Util.copyResourceToTmpDir("ili/SO_AGI_OEREB_CTS_20230819.ili"); // Die ili-Datei liegt in der Library.
             log.debug("iliFile: {}", iliFile.getAbsolutePath());
 
             Config config = new Config();
             new PgMain().initConfig(config);
             config.setFunction(Config.FC_REPLACE);
-            config.setValidation(false);
+            //config.setValidation(false);
             config.setModeldir(iliFile.getParent()+";https://geo.so.ch/models;http://models.geo.admin.ch");
             config.setModels("SO_AGI_OEREB_CTS_20230819");
             config.setBasketHandling(Config.BASKET_HANDLING_READWRITE);
