@@ -73,7 +73,7 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
                         </h:link>
                     </p:column>
 
-                    <p:column id="result-table-column-successegrid" headerText="Egrid" style="width:14%">                       
+                    <p:column id="result-table-column-successegrid" headerText="Egrid" style="width:13%">                       
                         <p:badge value="#{result.successEgrid() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successEgrid() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
                         <h:link outcome="detail" class="black-link" target="_blank">
@@ -83,7 +83,7 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
                         </h:link>
                     </p:column>
                      
-                    <p:column id="result-table-column-successextract" headerText="Extract" style="width:14%">                       
+                    <p:column id="result-table-column-successextract" headerText="Extract" style="width:13%">                       
                         <p:badge value="#{result.successExtract() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successExtract() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
                         <h:link outcome="detail" class="black-link" target="_blank">
@@ -93,7 +93,7 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
                         </h:link>
                     </p:column>
  
-                    <p:column id="result-table-column-starttime" headerText="Last Validation" style="width:14%">
+                    <p:column id="result-table-column-starttime" headerText="Last Validation" style="width:16%">
                         <h:outputText value="#{result.startTime()}">
                             <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm:ss"/>
                         </h:outputText>
