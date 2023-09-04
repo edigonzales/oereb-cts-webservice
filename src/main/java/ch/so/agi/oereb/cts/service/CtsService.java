@@ -106,9 +106,7 @@ public class CtsService {
             config.setModeldir(iliFile.getParent()+";https://geo.so.ch/models;http://models.geo.admin.ch");
             config.setModels("SO_AGI_OEREB_CTS_20230819");
             config.setBasketHandling(Config.BASKET_HANDLING_READWRITE);
-            System.out.println("**: "+params.get(TestSuite.PARAM_IDENTIFIER));
             config.setDatasetName(params.get(TestSuite.PARAM_IDENTIFIER));
-            System.out.println("**: "+config.getDatasetName());
                         
             config.setDbhost(dbHost);
             config.setDbport(dbPort);
