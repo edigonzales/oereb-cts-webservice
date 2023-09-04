@@ -102,7 +102,7 @@ public class CtsService {
             Config config = new Config();
             new PgMain().initConfig(config);
             config.setFunction(Config.FC_REPLACE);
-            //config.setValidation(false);
+            config.setValidation(false);
             config.setModeldir(iliFile.getParent()+";https://geo.so.ch/models;http://models.geo.admin.ch");
             config.setModels("SO_AGI_OEREB_CTS_20230819");
             config.setBasketHandling(Config.BASKET_HANDLING_READWRITE);
