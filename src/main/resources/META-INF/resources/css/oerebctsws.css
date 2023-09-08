@@ -45,9 +45,8 @@ body .ui-datatable .ui-datatable-data>tr {
 
 .detail-dialog {
     max-height: 80% !important;
-                overflow-x: hidden !important;
-                overflow-y: auto !important;
-
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 .line {

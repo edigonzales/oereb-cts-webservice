@@ -51,11 +51,11 @@ public class OerebCtsWebserviceApplication {
                         ResultSet rs = stmt.executeQuery(databaseTestQuery)) {
                     log.info("Database schema exists already.");
                 } catch (SQLException e) {
-                    log.warn("Database schema does not exists. Schema will be created.");
-
+                    log.info("Database schema does not exists. Schema will be created.");
                     try (Connection con = dataSource.getConnection(); Statement stmt = con.createStatement()) {
                         String query = Util.loadString("oereb-cts-postgres-dataset.sql");
                         stmt.execute(query);
+                        log.info("Schema created.");
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
