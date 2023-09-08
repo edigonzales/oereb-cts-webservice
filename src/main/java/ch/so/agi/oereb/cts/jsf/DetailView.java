@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import ch.so.agi.oereb.cts.ProbeResult;
 import ch.so.agi.oereb.cts.SummaryResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class DetailView {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -35,6 +38,8 @@ public class DetailView {
     ObjectMapper objectMapper;
 
     private List<ProbeResult> results;
+    
+    private ProbeResult selectedResult;
 
     @PostConstruct
     public void init() {
@@ -68,7 +73,8 @@ public class DetailView {
         log.info("**** " + identifier);
         log.info("**** " + probeClassName);
 
-        String query = getQuery();
+        String query = getQuery().formatted(identifier, probeClassName);
+        
 
         results = jdbcTemplate.query(query, new RowMapper<ProbeResult>() {
             @Override
@@ -91,9 +97,24 @@ public class DetailView {
 
     }
 
-    public String getResults() {
-        return "fubar";
+    public List<ProbeResult> getResults() {
+        return results;
     }
+    
+    public ProbeResult getSelectedResult() {
+        return selectedResult;
+    }
+
+    public void setSelectedResult(ProbeResult selectedResult) {
+        this.selectedResult = selectedResult;
+    }
+    
+    public void onRowSelect(SelectEvent<ProbeResult> event) {
+        System.out.println("event"+event.getObject());
+//        FacesMessage msg = new FacesMessage("Product Selected", String.valueOf(event.getObject().getRequest()));
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
 
     private String getQuery() {
         // starttime wird nur für die Sortierung benötigt.
@@ -101,24 +122,24 @@ public class DetailView {
 WITH probe AS 
 (
     SELECT 
-        t_id, classname, identifier, serviceendpoint, request, testsuitetime, starttime
+        t_id, classname, identifier, success, serviceendpoint, request, testsuitetime, starttime
     FROM 
         agi_oereb_cts_v1.proberesult 
     WHERE 
-        identifier = 'AG'
+        identifier = '%s'
 )
 SELECT 
-    json_build_object('starttime', probe.starttime, 'request', probe.request, 'checkResults', json_agg(c.* ORDER BY t_seq)) AS probe_results
+    json_build_object('starttime', probe.starttime, 'request', probe.request, 'success', bool_and(probe.success), 'checkResults', json_agg(c.* ORDER BY t_seq)) AS probe_results
 FROM 
     probe
     LEFT JOIN agi_oereb_cts_v1.checkresult AS c
     ON c.proberesult_checkresults = probe.t_id
 WHERE 
-    probe.classname = 'ch.so.agi.oereb.cts.GetExtractByIdProbe'
+    probe.classname = '%s'
 GROUP BY 
     probe.request, probe.starttime
 ORDER BY 
-    probe.starttime ASC                
+    probe.starttime ASC            
                                 """;
         return query;
     }

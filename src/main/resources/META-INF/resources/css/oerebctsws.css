@@ -43,6 +43,30 @@ body .ui-datatable .ui-datatable-data>tr {
     font-weight: 700 !important;
 }
 
+.detail-dialog {
+    max-height: 80% !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+
+}
+
+.line {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid Gainsboro;
+}
+
+.label {
+    width: 20% !important;
+    padding: 8px !important;
+}
+
+.value {
+    width: 80% !important;
+    padding: 8px !important;
+}
+
 .black-link {
     overflow: hidden;
     text-overflow: ellipsis;

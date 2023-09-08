@@ -2,22 +2,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
 <f:view>
     <h:head>
         <meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+        <h:outputStylesheet name="css/oerebctsws.css"/>
     </h:head>
 
     <h:body>
-    
-        <h:outputText value="#{dummy.text}" />
+        <div id="container"> 
         
-        <br/>
+            <div id="title">
+                <h:outputText value="#{param['identifier']}" />
+            </div>
+            
+            <h:form id="form">
+	            <p:dataTable id="probe-table" var="result" value="#{detailView.results}" reflow="true" selectionMode="single" rowKey="#{result.request}" selection="#{detailView.selectedResult}" >
+	                <p:ajax event="rowSelect" listener="#{detailView.onRowSelect}" update=":form:probeDetail" oncomplete="PF('probeDialog').show()"/>
+	            
+	                <p:column id="probe-table-column-request" headerText="Request" style="width:80%">
+                        <h:outputText value="#{result.request}" />
+	                    <a href="${result.request}" class="black-link" target="_blank">
+                            <i class="pi pi-external-link"></i>
+                        </a>
+	                </p:column>
+	
+	                <p:column id="probe-table-column-success" headerText="Success" style="width:10%">
+                        <p:badge value="#{result.success ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.success ? 'badge-success' : 'badge-failure'}"></p:badge>
+	                </p:column>       
+	            </p:dataTable>
+	            
+	            
+			    <p:dialog header="Detail" widgetVar="probeDialog" styleClass="detail-dialog" fitViewport="false" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="80%">
+			        <p:outputPanel id="probeDetail">
+			            <p:panelGrid  columns="2" rendered="#{not empty detailView.selectedResult}" columnClasses="label,value">
+			 
+			                <h:outputText value="Request:" />
+			                <h:outputLink value="${detailView.selectedResult.request}"  class="black-link" target="_blank">
+                                <h:outputText value="${detailView.selectedResult.request}"/>
+                            </h:outputLink>
 
-        <h:outputText value="#{detailView.results}" />
+			                
+			            </p:panelGrid>
+			            
+			             <div class="line"/>
+			    
+			            <c:forEach items="#{detailView.selectedResult.checkResults}" var="checkResult">
+			                <p:panelGrid  columns="2" rendered="#{not empty detailView.selectedResult}" columnClasses="label,value">
+			                    <h:outputText value="Check:" />
+			                    <h:outputText value="#{checkResult.classname}" />
+			                    
+			                    <h:outputText value="Description:" />
+			                    <h:outputText value="#{checkResult.adescription}" />
+			
+			                    <h:outputText value="Success:" />
+                                <p:badge value="#{checkResult.success ? 'SUCCESS' : 'FAILURE'}" styleClass="#{checkResult.success ? 'badge-success' : 'badge-failure'}"></p:badge>
 
+                                <h:outputText rendered="#{checkResult.classname eq 'ch.so.agi.oereb.cts.StatusCodeCheck'}" value="Status code:" />
+                                <h:outputText rendered="#{checkResult.classname eq 'ch.so.agi.oereb.cts.StatusCodeCheck'}" value="#{checkResult.statuscode}" />
 
+                                <h:outputText rendered="#{not checkResult.success}" value="Message:" />
+                                <h:outputText rendered="#{not checkResult.success}" value="#{checkResult.message}" />
+
+			
+			                </p:panelGrid>
+			                
+			                <div class="line"/>
+			
+			            </c:forEach>
+			            
+			        </p:outputPanel>
+			    </p:dialog>
+
+            </h:form>
+            
+        </div>
+     
     </h:body>
 </f:view>
 </html>

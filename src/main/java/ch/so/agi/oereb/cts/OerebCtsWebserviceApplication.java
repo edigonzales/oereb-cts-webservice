@@ -28,15 +28,6 @@ public class OerebCtsWebserviceApplication {
     @Value("${app.database.createOnStartup}")
     private boolean databaseCreateOnStartup;
 
-//    @Value("${spring.datasource.url}")
-//    private String datasourceUrl;
-//
-//    @Value("${spring.datasource.username}")
-//    private String datasourceUsername;
-//
-//    @Value("${spring.datasource.password}")
-//    private String datasourcePassword;
-
     @Value("${app.database.testQuery}")
     private String databaseTestQuery;
 
@@ -56,7 +47,6 @@ public class OerebCtsWebserviceApplication {
     CommandLineRunner init(CtsService ctsService) {
         return args -> {    
             if (databaseCreateOnStartup) {
-                //Connection con = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
                 try (Connection con = dataSource.getConnection(); Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(databaseTestQuery)) {
                     log.info("Database schema exists already.");
