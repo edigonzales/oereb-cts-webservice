@@ -70,7 +70,7 @@ public class DetailView {
             throw new IllegalArgumentException("Invalid probe name: " + probe);
         }
 
-        String query = getQuery().formatted(identifier, probeClassName);
+        String query = getQuery();
         results = jdbcTemplate.query(query, new RowMapper<ProbeResult>() {
             @Override
             public ProbeResult mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -86,7 +86,7 @@ public class DetailView {
                 }
                 return probeResult;
             }
-        });
+        }, identifier, probeClassName);
 
         log.info(results.toString());
 
@@ -118,7 +118,7 @@ WITH probe AS
     FROM 
         agi_oereb_cts_v1.proberesult 
     WHERE 
-        identifier = '%s'
+        identifier = ?
 )
 SELECT 
     json_build_object('starttime', probe.starttime, 'request', probe.request, 'success', bool_and(probe.success), 'checkResults', json_agg(c.* ORDER BY t_seq)) AS probe_results
@@ -127,7 +127,7 @@ FROM
     LEFT JOIN agi_oereb_cts_v1.checkresult AS c
     ON c.proberesult_checkresults = probe.t_id
 WHERE 
-    probe.classname = '%s'
+    probe.classname = ?
 GROUP BY 
     probe.request, probe.starttime
 ORDER BY 
