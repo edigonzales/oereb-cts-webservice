@@ -16,19 +16,8 @@
     </h:head>
 
     <h:body>
-        <!-- <h:outputText value="#{dummy.text}" /> -->
-
-
-        <!-- <p:divider /> -->
-<!--
-<ui:repeat value="#{probeResultView.results}" var="result">
-    #{result.identifier()}
-    <br/>
-</ui:repeat>
--->
 
 		 <!--<h:form >-->
-             <!-- <div class="card" style="height:80vh;">--> 
              <div id="container"> 
                 <div id="title">ÖREB-Kataster Compliance Test Suite</div>
                           
@@ -57,11 +46,6 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
                             <i class="pi pi-external-link"></i>
 						</h:link>
 		            </p:column>
-        <!-- 		
-		            <p:column headerText="Capabilities">
-		                <h:outputText value="#{product.quantity}" />
-		            </p:column>
- -->
 
                     <p:column id="result-table-column-successcapabilities" headerText="Capabilities" style="width:14%">                       
                         <p:badge value="#{result.successCapabilities() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successCapabilities() ? 'badge-success' : 'badge-failure'}"></p:badge>

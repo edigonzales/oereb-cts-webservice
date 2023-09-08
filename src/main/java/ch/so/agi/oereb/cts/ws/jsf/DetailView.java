@@ -70,12 +70,7 @@ public class DetailView {
             throw new IllegalArgumentException("Invalid probe name: " + probe);
         }
 
-        log.info("**** " + identifier);
-        log.info("**** " + probeClassName);
-
         String query = getQuery().formatted(identifier, probeClassName);
-        
-
         results = jdbcTemplate.query(query, new RowMapper<ProbeResult>() {
             @Override
             public ProbeResult mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -110,9 +105,6 @@ public class DetailView {
     }
     
     public void onRowSelect(SelectEvent<ProbeResult> event) {
-        System.out.println("event"+event.getObject());
-//        FacesMessage msg = new FacesMessage("Product Selected", String.valueOf(event.getObject().getRequest()));
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
 
