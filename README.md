@@ -27,17 +27,12 @@ java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --dbhost localhost --dbdatab
 **FIXME**: modeldir nicht mehr notwendig, wenn in Repo.
 
 
-
-
-
 Sql-Datei für erstmaligen DB-Start in Prod:
 ```
 java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres-dataset.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createDatasetCol --createFk --createFkIdx --sqlEnableNull --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
 
 java -jar /Users/stefan/Downloads/ili2pg-4.11.0.jar --createscript oereb-cts-postgres.sql --defaultSrsCode 2056 --strokeArcs --createEnumTabs --createMetaInfo --createImportTabs --createBasketCol --createFk --createFkIdx --sqlEnableNull --models SO_AGI_OEREB_CTS_20230819 --dbschema agi_oereb_cts_v1 --modeldir ../oereb-cts/lib/src/main/resources/ili/ 
 ```
-
-
 
 
 ### Build
