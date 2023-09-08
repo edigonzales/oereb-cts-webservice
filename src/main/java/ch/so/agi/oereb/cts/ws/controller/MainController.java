@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts.controller;
+package ch.so.agi.oereb.cts.ws.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import ch.so.agi.oereb.cts.service.CtsService;
+import ch.so.agi.oereb.cts.ws.service.CtsService;
 
 import java.io.File;
 import java.io.IOException;

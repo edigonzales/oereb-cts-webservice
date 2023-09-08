@@ -41,6 +41,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     
     implementation 'ch.interlis:ili2pg:4.11.0'
+    implementation 'ch.ehi:ehibasics:1.4.1'
 
     implementation 'org.joinfaces:faces-spring-boot-starter'
     implementation 'org.joinfaces:primefaces-spring-boot-starter'
@@ -55,7 +56,7 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.4'
     
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql' // Wegen PGProperty etc.
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //testImplementation 'org.postgresql:postgresql'

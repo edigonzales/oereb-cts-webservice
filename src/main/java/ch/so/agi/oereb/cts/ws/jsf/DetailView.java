@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts.jsf;
+package ch.so.agi.oereb.cts.ws.jsf;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.so.agi.oereb.cts.ProbeResult;
-import ch.so.agi.oereb.cts.SummaryResult;
+import ch.so.agi.oereb.cts.ws.ProbeResult;
+import ch.so.agi.oereb.cts.ws.SummaryResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;

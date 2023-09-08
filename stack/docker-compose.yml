@@ -1,0 +1,38 @@
+version: '3'
+services:
+  edit-db:
+    image: bitnami/postgresql:14.8.0-debian-11-r74
+    restart: unless-stopped
+    environment:
+      POSTGRESQL_DATABASE: edit
+      POSTGRESQL_USERNAME: ddluser
+      POSTGRESQL_PASSWORD: ddluser
+      POSTGRESQL_POSTGRES_PASSWORD: secret
+      POSTGRESQL_INITSCRIPTS_USERNAME: postgres
+      POSTGRESQL_INITSCRIPTS_PASSWORD: secret
+      TZ: Europe/Zurich
+    ports:
+      - "54321:5432"
+    volumes:
+      - type: bind
+        source: ./setup.sql
+        target: /docker-entrypoint-preinitdb.d/setup.sql
+      - type: bind
+        source: ./prepare_setup.sh
+        target: /docker-entrypoint-preinitdb.d/prepare_setup.sh
+      - type: volume
+        source: postgresql_data_edit
+        target: /bitnami/postgresql
+    labels:
+      org.springframework.boot.service-connection: postgres
+  frontend:
+    image: sogis/ilivalidator-web-service:2
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Zurich
+      DB_HOST: jdbc:postgresql://edit-db:5432/edit
+   # entrypoint: "java -XX:+UseParallelGC -Xmx4G -jar application.jar --spring.profiles.active=docker"
+    ports:
+      - 8080:8080
+volumes:
+  postgresql_data_edit:

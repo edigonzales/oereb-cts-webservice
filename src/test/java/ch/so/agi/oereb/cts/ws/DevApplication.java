@@ -1,7 +1,9 @@
-package ch.so.agi.oereb.cts;
+package ch.so.agi.oereb.cts.ws;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+
+import ch.so.agi.oereb.cts.ws.OerebCtsWebserviceApplication;
 
 import org.postgresql.PGProperty;
 import org.springframework.boot.CommandLineRunner;

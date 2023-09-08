@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts.jsf;
+package ch.so.agi.oereb.cts.ws.jsf;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import ch.so.agi.oereb.cts.SummaryResult;
+import ch.so.agi.oereb.cts.ws.SummaryResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;

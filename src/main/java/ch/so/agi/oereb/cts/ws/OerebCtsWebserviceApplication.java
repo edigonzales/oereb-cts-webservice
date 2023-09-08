@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts;
+package ch.so.agi.oereb.cts.ws;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import ch.so.agi.oereb.cts.service.CtsService;
+import ch.so.agi.oereb.cts.ws.service.CtsService;
 
 @EnableScheduling
 @SpringBootApplication

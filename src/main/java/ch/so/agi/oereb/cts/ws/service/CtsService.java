@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts.service;
+package ch.so.agi.oereb.cts.ws.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +27,9 @@ import ch.ehi.ili2db.base.Ili2db;
 import ch.ehi.ili2db.base.Ili2dbException;
 import ch.ehi.ili2db.gui.Config;
 import ch.ehi.ili2pg.PgMain;
-import ch.so.agi.oereb.cts.ServiceProperties;
 import ch.so.agi.oereb.cts.TestSuite;
-import ch.so.agi.oereb.cts.Util;
+import ch.so.agi.oereb.cts.ws.ServiceProperties;
+import ch.so.agi.oereb.cts.ws.Util;
 import jakarta.annotation.PostConstruct;
 
 @Service

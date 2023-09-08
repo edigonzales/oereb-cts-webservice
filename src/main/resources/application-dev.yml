@@ -11,10 +11,10 @@ management:
      
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54321/edit
-    driverClassName: org.postgresql.Driver
-    username: ddluser
-    password: ddluser
+    url: ${DB_HOST:jdbc:postgresql://localhost:54321/edit}
+    driverClassName: ${DB_DRIVER_CLASSNAME:org.postgresql.Driver}
+    username: ${DB_USR:ddluser}
+    password: ${DB_PWD:ddluser}
  
 logging:
   level:
@@ -61,18 +61,18 @@ oereb:
           IDENTDN: AR0200302400
           NUMBER: 123
           EGRID: CH795277802170
-        - identifier: BL
-          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
-          EN: 2611819,1260126
-          IDENTDN: BL0200002773
-          NUMBER: 6132
-          EGRID: CH767982496078
         - identifier: BE
           SERVICE_ENDPOINT: https://www.oereb2.apps.be.ch/
           EN: 2600190,1199244
           IDENTDN: BE0200000044
           NUMBER: 573
           EGRID: CH968746351907
+        - identifier: BL
+          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
+          EN: 2611819,1260126
+          IDENTDN: BL0200002773
+          NUMBER: 6132
+          EGRID: CH767982496078
         - identifier: BS
           SERVICE_ENDPOINT: https://api.oereb.bs.ch/
           EN: 2612855,1267223

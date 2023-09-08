@@ -11,15 +11,16 @@ management:
      
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54321/edit
-    driverClassName: org.postgresql.Driver
-    username: ddluser
-    password: ddluser
+    url: ${DB_HOST:jdbc:postgresql://localhost:54321/edit}
+    driverClassName: ${DB_DRIVER_CLASSNAME:org.postgresql.Driver}
+    username: ${DB_USR:ddluser}
+    password: ${DB_PWD:ddluser}
  
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
     ch.so.agi.oereb: ${LOG_LEVEL_APP:DEBUG} 
+    com.zaxxer.hikari: ${LOG_LEVEL_DB_CONNECTION_POOL:INFO}
 
 app:
   checkCronExpression: ${CHECK_CRON_EXPRESSION:0 0 */4 * * *}
@@ -28,7 +29,7 @@ app:
   database:
     schema: ${DB_SCHEMA:agi_oereb_cts_v1}
     testQuery: ${DB_TEST_QUERY:SELECT * FROM agi_oereb_cts_v1.proberesult LIMIT 1}
-    createOnStartup: ${DB_CREATE_ON_STARTUP:true}
+    createOnStartup: ${DB_CREATE_ON_STARTUP:false}
   testSuite:
     validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:false}
 
@@ -52,18 +53,18 @@ oereb:
           IDENTDN: AR0200302400
           NUMBER: 123
           EGRID: CH795277802170
-        - identifier: BL
-          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
-          EN: 2611819,1260126
-          IDENTDN: BL0200002773
-          NUMBER: 6132
-          EGRID: CH767982496078
         - identifier: BE
           SERVICE_ENDPOINT: https://www.oereb2.apps.be.ch/
           EN: 2600190,1199244
           IDENTDN: BE0200000044
           NUMBER: 573
           EGRID: CH968746351907
+        - identifier: BL
+          SERVICE_ENDPOINT: https://oereb.geo.bl.ch/
+          EN: 2611819,1260126
+          IDENTDN: BL0200002773
+          NUMBER: 6132
+          EGRID: CH767982496078
         - identifier: BS
           SERVICE_ENDPOINT: https://api.oereb.bs.ch/
           EN: 2612855,1267223
@@ -166,3 +167,4 @@ oereb:
           IDENTDN: ZH0200000261
           NUMBER: OB4248
           EGRID: CH699970989135
+

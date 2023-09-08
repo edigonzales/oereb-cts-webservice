@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts.jsf;
+package ch.so.agi.oereb.cts.ws.jsf;
 
 import java.time.LocalDateTime;
 

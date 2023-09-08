@@ -1,4 +1,4 @@
-package ch.so.agi.oereb.cts;
+package ch.so.agi.oereb.cts.ws;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -10,8 +10,8 @@ public class WelcomePageRedirect implements WebMvcConfigurer {
     
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-//      registry.addViewController("/")
-//          .setViewName("forward:/index.xhtml");
-//      registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+      registry.addViewController("/")
+          .setViewName("forward:/summary.xhtml");
+      registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

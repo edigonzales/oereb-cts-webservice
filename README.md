@@ -2,7 +2,6 @@
 
 ## Verbesserungen
 
-- Brauche ich Connection-Pool / Datasource? Wenn es nur um das Importieren geht, dann eher nicht. Wenn das GUI auch hier implementiert wird, wohl schon.
 - Vielleicht gibt es sinnvolle Unterscheidungen bei den Exception, wenn beim Hochfahren gleich auch validiert wird. Stand heute wird bei einer Exception der Server wieder runtergefahren.
 - JobRunr: damit können einfach mehrere Worker die Arbeit erledigen.
 
