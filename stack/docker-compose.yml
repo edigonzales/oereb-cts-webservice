@@ -40,7 +40,7 @@ services:
       TZ: Europe/Zurich
       DB_HOST: jdbc:postgresql://edit-db:5432/edit
       DB_CREATE_ON_STARTUP: true
-      CTS_VALIDATE_ON_STARTUP: false
+      CTS_VALIDATE_ON_STARTUP: true
     entrypoint: "java -XX:+UseParallelGC -Xmx4G -jar application.jar --spring.profiles.active=docker"
     ports:
       - 8080:8080
