@@ -32,11 +32,11 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
 		                <h:outputText value="#{result.identifier()}" />
 		            </p:column>
 		
-		            <p:column id="result-table-column-serviceendpoint" headerText="Service Endpoint" style="width:27%">
+		            <p:column id="result-table-column-serviceendpoint" headerText="Service Endpoint" style="width:29%">
 		                <h:outputText value="#{result.serviceEndpoint()}" />
 		            </p:column>
 		
-		            <p:column id="result-table-column-successversions" headerText="Versions" style="width:14%">		                
+		            <p:column id="result-table-column-successversions" headerText="Versions" style="width:13%">		                
                         <!-- <p:badge value="SUCCESS" styleClass="badge-success" rendered="#{result.successVersions()}"></p:badge> -->		                
                         <p:badge value="#{result.successVersions() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successVersions() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
@@ -47,7 +47,7 @@ Records-Unterstützung ist nicht garantiert. Darum erfolgt der Zugriff anders (m
 						</h:link>
 		            </p:column>
 
-                    <p:column id="result-table-column-successcapabilities" headerText="Capabilities" style="width:14%">                       
+                    <p:column id="result-table-column-successcapabilities" headerText="Capabilities" style="width:13%">                       
                         <p:badge value="#{result.successCapabilities() ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.successCapabilities() ? 'badge-success' : 'badge-failure'}"></p:badge>
                         &nbsp;
                         <h:link outcome="detail" class="black-link" target="_blank">
