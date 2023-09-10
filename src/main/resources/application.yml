@@ -27,6 +27,14 @@ logging:
     ch.so.agi.oereb: ${LOG_LEVEL_APP:DEBUG} 
     com.zaxxer.hikari: ${LOG_LEVEL_DB_CONNECTION_POOL:INFO}
 
+joinfaces:
+  faces:
+    project-stage: production
+    state-saving-method: client
+    interpret-empty-string-submitted-values-as-null: true #https://stackoverflow.com/questions/33334192/tomcat-8-and-9-coerce-behaviour-null-strings-are-incorrectly-set-as-empty-str 
+    primefaces:
+      theme: saga
+
 app:
   checkCronExpression: ${CHECK_CRON_EXPRESSION:0 0 */4 * * *}
   workDirectory: ${WORK_DIRECTORY:#{systemProperties['java.io.tmpdir']}}
