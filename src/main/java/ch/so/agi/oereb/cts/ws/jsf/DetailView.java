@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class DetailView {
 
     private List<ProbeResult> results;
     
-    private ProbeResult selectedResult;
+    private ProbeResult selectedResult = null;
 
     @PostConstruct
     public void init() {
@@ -78,6 +79,8 @@ public class DetailView {
                 ProbeResult probeResult = null;
                 try {
                     probeResult = objectMapper.readValue(probeResults, ProbeResult.class);
+                    String id = UUID.nameUUIDFromBytes(probeResult.getRequest().getBytes()).toString();
+                    probeResult.setId(id);
                     
                     
                 } catch (JsonProcessingException e) {
@@ -87,6 +90,10 @@ public class DetailView {
                 return probeResult;
             }
         }, identifier, probeClassName);
+        
+        for (ProbeResult result: results) {
+            log.info(result.getRequest());
+        }
     }
 
     public List<ProbeResult> getResults() {
@@ -99,9 +106,11 @@ public class DetailView {
 
     public void setSelectedResult(ProbeResult selectedResult) {
         this.selectedResult = selectedResult;
+        //System.out.println(this.selectedResult);
     }
     
     public void onRowSelect(SelectEvent<ProbeResult> event) {
+       // System.out.println(event.toString());
     }
 
 

@@ -21,7 +21,7 @@
             </div>
             
             <h:form id="form">
-	            <p:dataTable id="probe-table" var="result" value="#{detailView.results}" reflow="true" selectionMode="single" rowKey="#{result.request}" selection="#{detailView.selectedResult}" >
+	            <p:dataTable id="probe-table" var="result" value="#{detailView.results}" reflow="true" selectionMode="single" rowKey="#{result.id}" selection="#{detailView.selectedResult}" >
 	                <p:ajax event="rowSelect" listener="#{detailView.onRowSelect}" update=":form:probeDetail" oncomplete="PF('probeDialog').show()"/>
 	            
 	                <p:column id="probe-table-column-request" headerText="Request" style="width:80%">
@@ -39,18 +39,14 @@
 	            
 			    <p:dialog header="Detail" widgetVar="probeDialog" styleClass="detail-dialog" fitViewport="false" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="80%">
 			        <p:outputPanel id="probeDetail">
+			             
 			            <p:panelGrid  columns="2" rendered="#{not empty detailView.selectedResult}" columnClasses="label,value">
-			 
 			                <h:outputText value="Request:" />
 			                <h:outputLink value="${detailView.selectedResult.request}"  class="black-link" target="_blank">
                                 <h:outputText value="${detailView.selectedResult.request}"/>
                             </h:outputLink>
-
-			                
 			            </p:panelGrid>
-			            
-			             <div class="line"/>
-			    
+			            <div class="line"/>
 			            <c:forEach items="#{detailView.selectedResult.checkResults}" var="checkResult">
 			                <p:panelGrid  columns="2" rendered="#{not empty detailView.selectedResult}" columnClasses="label,value">
 			                    <h:outputText value="Check:" />
@@ -74,7 +70,6 @@
 			                <div class="line"/>
 			
 			            </c:forEach>
-			            
 			        </p:outputPanel>
 			    </p:dialog>
 
