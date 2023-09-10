@@ -87,9 +87,6 @@ public class DetailView {
                 return probeResult;
             }
         }, identifier, probeClassName);
-
-        log.info(results.toString());
-
     }
 
     public List<ProbeResult> getResults() {
