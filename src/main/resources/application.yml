@@ -90,6 +90,12 @@ oereb:
           IDENTDN: FR219611
           NUMBER: 17521
           EGRID: CH831076942864
+        - identifier: GL
+          SERVICE_ENDPOINT: https://map.geo.gl.ch/oereb/
+          EN: 2724248,1211261
+          IDENTDN: GL0200000012
+          NUMBER: 1375
+          EGRID: CH716980227858
         - identifier: GR
           SERVICE_ENDPOINT: https://oereb.geo.gr.ch/oereb/
           EN: 2759467,1191198
@@ -144,6 +150,12 @@ oereb:
           IDENTDN: SO0200002457
           NUMBER: 168
           EGRID: CH807306583219
+        - identifier: SZ
+          SERVICE_ENDPOINT: https://map.geo.sz.ch/oereb/
+          EN: 2690533,1209096
+          IDENTDN: SZ0200001372
+          NUMBER: 3579
+          EGRID: CH392277824021
         - identifier: TG
           SERVICE_ENDPOINT: https://map.geo.tg.ch/services/oereb/
           EN: 2709869,1268547
