@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   edit-db:
     image: bitnami/postgresql:14.8.0-debian-11-r74
     restart: unless-stopped
@@ -25,16 +26,27 @@ services:
         target: /bitnami/postgresql
     labels:
       org.springframework.boot.service-connection: postgres
+
   reverse-proxy:
     image: traefik:v2.10
     restart: unless-stopped
-    command: --api.insecure=true --providers.docker
+    command: 
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
+      - "443:443"
       - "8081:8080"
     volumes:
-      - "./letsencrypt:/letsencrypt"
+      - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+
   frontend:
     image: sogis/oereb-cts:0
     restart: unless-stopped
@@ -49,6 +61,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`monitoring-oereb.localhost`) || Host(`monitoring.oereb.services`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
       - "traefik.http.services.frontend.loadbalancer.server.port=8080"
+
 volumes:
   postgresql_data_edit:
