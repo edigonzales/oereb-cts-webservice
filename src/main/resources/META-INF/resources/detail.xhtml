@@ -9,7 +9,10 @@
 
 <f:view>
     <h:head>
-        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <h:outputStylesheet name="css/oerebctsws.css"/>
     </h:head>
 
@@ -21,17 +24,17 @@
             </div>
             
             <h:form id="form">
-	            <p:dataTable id="probe-table" var="result" value="#{detailView.results}" reflow="true" selectionMode="single" rowKey="#{result.id}" selection="#{detailView.selectedResult}" >
+	            <p:dataTable id="probe-table" var="result" value="#{detailView.results}" tableStyle="table-layout: auto;" reflow="true" selectionMode="single" rowKey="#{result.id}" selection="#{detailView.selectedResult}" >
 	                <p:ajax event="rowSelect" listener="#{detailView.onRowSelect}" update=":form:probeDetail" oncomplete="PF('probeDialog').show()"/>
 	            
-	                <p:column id="probe-table-column-request" headerText="Request" style="width:80%">
+	                <p:column id="probe-table-column-request" headerText="Request">
                         <h:outputText value="#{result.request}" />
 	                    <a href="${result.request}" class="black-link" target="_blank">
                             <i class="pi pi-external-link"></i>
                         </a>
 	                </p:column>
 	
-	                <p:column id="probe-table-column-success" headerText="Success" style="width:10%">
+	                <p:column id="probe-table-column-success" headerText="Success">
                         <p:badge value="#{result.success ? 'SUCCESS' : 'FAILURE'}" styleClass="#{result.success ? 'badge-success' : 'badge-failure'}"></p:badge>
 	                </p:column>       
 	            </p:dataTable>
