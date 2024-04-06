@@ -13,8 +13,8 @@ spring:
   datasource:
     url: ${DB_HOST:jdbc:postgresql://localhost:54321/edit}
     driverClassName: ${DB_DRIVER_CLASSNAME:org.postgresql.Driver}
-    username: ${DB_USR:ddluser}
-    password: ${DB_PWD:ddluser}
+    username: ${DB_USR:postgres}
+    password: ${DB_PWD:secret}
  
 logging:
   level:
@@ -39,7 +39,7 @@ app:
     testQuery: ${DB_TEST_QUERY:SELECT * FROM agi_oereb_cts_v1.proberesult LIMIT 1}
     createOnStartup: ${DB_CREATE_ON_STARTUP:false}
   testSuite:
-    validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:false}
+    validateOnStartup: ${CTS_VALIDATE_ON_STARTUP:true}
 
 oereb: 
     services:
@@ -85,12 +85,12 @@ oereb:
 #          IDENTDN: FR219611
 #          NUMBER: 17521
 #          EGRID: CH831076942864
-        - identifier: GL
-          SERVICE_ENDPOINT: https://map.geo.gl.ch/oereb/
-          EN: 2724248,1211261
-          IDENTDN: GL0200000012
-          NUMBER: 1375
-          EGRID: CH716980227858
+#        - identifier: GL
+#          SERVICE_ENDPOINT: https://map.geo.gl.ch/oereb/
+#          EN: 2724248,1211261
+#          IDENTDN: GL0200000012
+#          NUMBER: 1375
+#          EGRID: CH716980227858
 #        - identifier: GR
 #          SERVICE_ENDPOINT: https://oereb.geo.gr.ch/oereb/
 #          EN: 2759467,1191198
@@ -139,18 +139,18 @@ oereb:
 #          IDENTDN: SH0200002939
 #          NUMBER: 1582
 #          EGRID: CH915411087888
-#        - identifier: SO
-#          SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
-#          EN: 2600595,1215629
-#          IDENTDN: SO0200002457
-#          NUMBER: 168
-#          EGRID: CH807306583219
-        - identifier: SZ
-          SERVICE_ENDPOINT: https://map.geo.sz.ch/oereb/
-          EN: 2690533,1209096
-          IDENTDN: SZ0200001372
-          NUMBER: 3579
-          EGRID: CH392277824021
+        - identifier: SO
+          SERVICE_ENDPOINT: https://geo.so.ch/api/oereb/
+          EN: 2600595,1215629
+          IDENTDN: SO0200002457
+          NUMBER: 168
+          EGRID: CH807306583219
+#        - identifier: SZ
+#          SERVICE_ENDPOINT: https://map.geo.sz.ch/oereb/
+#          EN: 2690533,1209096
+#          IDENTDN: SZ0200001372
+#          NUMBER: 3579
+#          EGRID: CH392277824021
 #        - identifier: TG
 #          SERVICE_ENDPOINT: https://map.geo.tg.ch/services/oereb/
 #          EN: 2709869,1268547
