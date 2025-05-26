@@ -181,7 +181,7 @@ oereb:
           #NUMBER=6918
           EGRID: CH595290323059
         - identifier: ZG
-          SERVICE_ENDPOINT: https://oereb.zg.ch/ors/
+          SERVICE_ENDPOINT: https://oereb.zg.ch/oereb/
           EN: 2681396,1225658
           IDENTDN: ZG0200001711
           NUMBER: 289
